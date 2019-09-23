@@ -54,10 +54,10 @@ set, for each of the algorithms in the the Wisconsin Diagnostic Breast Cancer (W
 set, for each of the algorithms in the he Handwritten Digits Image Classification (MNIST).
 
 In order to run the assignment, you just need to move to supervised learning directory and 
-then execute the supervised_learning.py script:
+then execute the experiments.py script:
 ```bash
 cd project1
-python supervised_learning.py
+python experiments.py
 ```
 Figures will show up progressively. It takes a while to perform all the experiments 
 and hyperparameter optimizations. However, they have already been saved into the 
