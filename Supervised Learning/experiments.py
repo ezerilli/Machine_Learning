@@ -148,35 +148,35 @@ def experiment2(x_train, x_test, y_train, y_test):
 
     training_sizes = np.arange(20, int(len(x_train) * 0.89), 20)
 
-    # print('\n--------------------------')
-    # knn = KNN(k=1, weights='uniform', p=2)
-    # knn.experiment(x_train, x_test, y_train, y_test,
-    #                cv=10,
-    #                y_lim=0.3,
-    #                n_neighbors_range=np.arange(1, 50, 2),
-    #                p_range=np.arange(1, 20),
-    #                weight_functions=['uniform', 'distance'],
-    #                train_sizes=training_sizes)
-    #
-    # print('\n--------------------------')
-    # svm = SVM(c=1., kernel='rbf', degree=3, gamma=0.001, random_state=42)
-    # svm.experiment(x_train, x_test, y_train, y_test,
-    #                cv=10,
-    #                y_lim=0.2,
-    #                C_range=[1, 5] + list(range(10, 100, 20)) + list(range(100, 1000, 50)),
-    #                kernels=['linear', 'poly', 'rbf'],
-    #                gamma_range=np.logspace(-7, -1, 50),
-    #                poly_degrees=[2, 3, 4],
-    #                train_sizes=training_sizes)
+    print('\n--------------------------')
+    knn = KNN(k=1, weights='uniform', p=2)
+    knn.experiment(x_train, x_test, y_train, y_test,
+                   cv=10,
+                   y_lim=0.3,
+                   n_neighbors_range=np.arange(1, 50, 2),
+                   p_range=np.arange(1, 20),
+                   weight_functions=['uniform', 'distance'],
+                   train_sizes=training_sizes)
 
-    # print('\n--------------------------')
-    # dt = DecisionTree(max_depth=1, min_samples_leaf=1, random_state=42)
-    # dt.experiment(x_train, x_test, y_train, y_test,
-    #               cv=10,
-    #               y_lim=0.1,
-    #               max_depth_range=list(range(1, 100, 1)),
-    #               min_samples_leaf_range=list(range(1, 30)),
-    #               train_sizes=training_sizes)
+    print('\n--------------------------')
+    svm = SVM(c=1., kernel='rbf', degree=3, gamma=0.001, random_state=42)
+    svm.experiment(x_train, x_test, y_train, y_test,
+                   cv=10,
+                   y_lim=0.2,
+                   C_range=[1, 5] + list(range(10, 100, 20)) + list(range(100, 1000, 50)),
+                   kernels=['linear', 'poly', 'rbf'],
+                   gamma_range=np.logspace(-7, -1, 50),
+                   poly_degrees=[2, 3, 4],
+                   train_sizes=training_sizes)
+
+    print('\n--------------------------')
+    dt = DecisionTree(max_depth=1, min_samples_leaf=1, random_state=42)
+    dt.experiment(x_train, x_test, y_train, y_test,
+                  cv=10,
+                  y_lim=0.1,
+                  max_depth_range=list(range(1, 100, 1)),
+                  min_samples_leaf_range=list(range(1, 30)),
+                  train_sizes=training_sizes)
 
     print('\n--------------------------')
     boosted_dt = AdaBoost(n_estimators=50, learning_rate=1., max_depth=3, random_state=42)
@@ -199,9 +199,8 @@ def experiment2(x_train, x_test, y_train, y_test):
 
 
 print('\n--------------------------')
-# x_train, x_test, y_train, y_test = load_dataset(dataset='WDBC', visualize=False)
-# experiment1(x_train, x_test, y_train, y_test)
+x_train, x_test, y_train, y_test = load_dataset(dataset='WDBC', visualize=False)
+experiment1(x_train, x_test, y_train, y_test)
 
 x_train, x_test, y_train, y_test = load_dataset(dataset='MNIST', visualize=False)
 experiment2(x_train, x_test, y_train, y_test)
-
