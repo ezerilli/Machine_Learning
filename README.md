@@ -1,8 +1,8 @@
-CS7642 - Machine Learning Github Repository (https://github.com/ezerilli)
+CS7641 - Machine Learning Github Repository (https://github.com/ezerilli/Machine_Learning)
 
 SETTING UP THE ENVIRONMENT
 
-The following steps leads to setup the working environment for CS7642 - Machine Learning 
+The following steps leads to setup the working environment for CS7641 - Machine Learning 
 in the OMSCS program.
 
 Installing the conda environment is a ready-to-use solution to be able to run python 
