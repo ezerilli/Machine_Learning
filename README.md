@@ -56,7 +56,7 @@ set, for each of the algorithms in the he Handwritten Digits Image Classificatio
 In order to run the assignment, you just need to move to supervised learning directory and 
 then execute the experiments.py script:
 ```bash
-cd cd Supervised\ Learning/
+cd Supervised\ Learning/
 python experiments.py
 ```
 Figures will show up progressively. It takes a while to perform all the experiments 
