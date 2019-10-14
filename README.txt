@@ -32,7 +32,7 @@ python my_file.py
 conda deactivate
 ```
 
-7. 	During the semester I may need to add some new packages to the environment. So, in
+7. During the semester I may need to add some new packages to the environment. So, in
 the case you have previously installed this environment, you just need to update it:
 ```bash
 conda env update -f requirements.yaml
@@ -56,9 +56,35 @@ set, for each of the algorithms in the he Handwritten Digits Image Classificatio
 In order to run the assignment, you just need to move to supervised learning directory and 
 then execute the experiments.py script:
 ```bash
-cd project1
+cd cd Supervised\ Learning/
 python experiments.py
 ```
 Figures will show up progressively. It takes a while to perform all the experiments 
 and hyperparameter optimizations. However, they have already been saved into the 
 images directory. Theory, results and experiments are discussed in the report.
+
+
+ASSIGNMENT2 - RANDOMIZED OPTIMIZATION
+
+Assignment 2 aims to explore some algorithms in Randomized Optimization, namely Random-Hill 
+Climbing, Simulated Annealing, Genetic Algorithms, MIMIC and Gradient Descent, while comparing 
+their performances on 3 interesting discrete and 1 continuous optimisation problems: 
+the Travel Salesman Problem, Flip Flop, 4-Peaks and Neural Network training.
+
+The assignment consists of four parts: 
+
+- experiment 1, producing complexity and performances curves for the Travel Salesman problem.
+- experiment 2, producing complexity and performances curves for the Flip Flop problem.
+- experiment 2, producing complexity and performances curves for the 4-Peak problem.
+- experiment 2, producing complexity and performances curves for the Neural Network problem.
+
+In order to run the assignment, you just need to move to randomised optimization directory and 
+then execute the experiments.py script:
+```bash
+cd Randomized\ Optimization/
+python experiments.py
+```
+Figures will show up progressively. It takes a while to perform all the experiments 
+and parameters optimizations. However, they have already been saved into the 
+images directory. Theory, results and experiments are discussed in the report.
+
