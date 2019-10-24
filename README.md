@@ -1,5 +1,5 @@
-# CS7641 - Machine Learning Github Repository 
-https://github.com/ezerilli/Machine_Learning
+# CS7641 - Machine Learning
+https://github.com/ezerilli/CS7641-Machine_Learning
 
 ### SETTING UP THE ENVIRONMENT 👨🏻‍💻👨🏻‍💻👨🏻‍💻
 
