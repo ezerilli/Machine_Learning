@@ -39,8 +39,8 @@ conda env update -f requirements.yml
 
 ### ASSIGNMENT1 - SUPERVISED LEARNING
 
-This Assignment aims to explore 5 **Supervised Learning** algorithms (**k-Nearest Neighbors**, **Support Vector Machines**, 
-**Decision Trees**, **AdaBoost** and **Neural Networks**), perform model complexity analysis and learning curves while 
+This assignment aims to explore 5 **Supervised Learning** algorithms (**k-Nearest Neighbors**, **Support Vector Machines**, 
+**Decision Trees**, **AdaBoost** and **Neural Networks**) and to perform model complexity analysis and learning curves while 
 comparing their performances on two interesting datasets: the **Wisconsin Diagnostic Breast Cancer (WDBC)** and the 
 **Handwritten Digits Image Classification (the famous MNIST)**.
 
@@ -52,23 +52,23 @@ algorithms, on the _Wisconsin Diagnostic Breast Cancer (WDBC)_ dataset.
 - _experiment 2_, producing validation curves, learning curves and performances on the test set, for each of the 
 algorithms, on the _Handwritten Digits Image Classification (MNIST)_ dataset.
 
-In order to run the assignment, you just need to move to the supervised learning directory, then execute `run_experiments.py`:
+In order to run the experiments, run:
 ```bash
 cd Supervised\ Learning/
 python run_experiments.py
 ```
 Figures will show up progressively. It takes a while to perform all the experiments and hyperparameter optimizations. 
 However, they have already been saved into the images directory. Theory, results and experiments are discussed in the 
-report (not provided here because of Georgia Tech's Honor Code).
+report (not provided here due to Georgia Tech's Honor Code).
 
 
 ### ASSIGNMENT2 - RANDOMIZED OPTIMIZATION
 
-Assignment 2 aims to explore some algorithms in **Randomized Optimization**, namely **Random-Hill Climbing (RHC)**, **Simulated 
+This assignment aims to explore some algorithms in **Randomized Optimization**, namely **Random-Hill Climbing (RHC)**, **Simulated 
 Annealing (SA)**, **Genetic Algorithms (GA)** and **Mutual-Information Maximizing Input Clustering (MIMIC)**, while comparing 
 their performances on 3 interesting discrete optimisation problems: the **Travel Salesman Problem**, **Flip Flop** and **4-Peaks**. 
-Moreover, RHC, SA and GA will be compared to **Gradient Descent** and **Backpropagation** on a (nowadays) fundamental optimization 
-problem: training complex **Neural Networks**.
+Moreover, RHC, SA and GA will later be compared to **Gradient Descent** and **Backpropagation** on a (nowadays) fundamental 
+optimization problem: training complex **Neural Networks**.
 
 The assignment consists of four parts: 
 
@@ -77,14 +77,14 @@ The assignment consists of four parts:
 - _experiment 3_, producing complexity and performances curves for _4-Peaks_.
 - _experiment 4_, producing complexity and performances curves for _Neural Networks_ training.
 
-In order to run the assignment, you just need to move to randomised optimization directory and then execute `run_experiments.py`:
+In order to run the experiments, run:
 ```bash
 cd Randomized\ Optimization/
 python run_experiments.py
 ```
 Figures will show up progressively. It takes a while to perform all the experiments and parameters optimizations. 
 However, they have already been saved into the images directory. Theory, results and experiments are discussed in the 
-report (not provided here because of Georgia Tech's Honor Code). 
+report (not provided here due to Georgia Tech's Honor Code). 
 
 ### ASSIGNMENT3 - UNSUPERVISED LEARNING
 
