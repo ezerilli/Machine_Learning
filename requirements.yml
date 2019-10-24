@@ -1,24 +1,19 @@
 name: CS7641
 channels:
   - conda-forge
-#  - pytorch
   - anaconda
   - defaults
 dependencies:
   - python=3.7.4
-#  - setuptools=41.2.0
-#  - h5py=2.9.0
   - numpy=1.17.2
   - matplotlib=3.1.0
   - scipy=1.3.1
   - pandas=0.25.1
-  - opencv=4.1.1
   - pip=19.2.2
   - scikit-learn=0.21.2
   - seaborn=0.9
-#  - keras=2.2.4
-#  - pytorch=1.2.0
-#  - torchvision=0.4.0
   - pip:
     - graphviz==0.10.1
     - pydot==1.4.1
+    - git+git://github.com/ezerilli/mlrose
+    
