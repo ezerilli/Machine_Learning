@@ -94,3 +94,14 @@ Work in progress !
 ### ASSIGNMENT4 - MARKOV DECISION PROCESSES 🔥🔥🔥
 
 Work in progress !
+
+### REFERENCES
+
+- [1] National Cancer Institute. https://www.cancer.gov. Last accessed: 2019-09-20.
+- [2] Dheeru Dua and Casey Graff. UCI machine learning repository, 2017.
+- [3] F. Pedregosa, G. Varoquaux, Gramfort, and al. Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12:2825–2830, 2011.
+- [4] Joaquin Vanschoren, Jan N. van Rijn, Bernd Bischl, and Luis Torgo. Openml: Networked science in machine learning. SIGKDD Explorations, 15(2):49–60, 2013.
+- [5] Stuart Russell and Peter Norvig. Artificial Intelligence: A Modern Approach. Prentice Hall Press, Upper Saddle River, NJ, USA, 3rd edition, 2009.
+- [6] Thomas M. Mitchell. Machine Learning. McGraw-Hill, New York, NY, USA, 1997.
+- [7] Jeremy S. De Bonet, Charles L. Isbell, Jr., and Paul Viola. MIMIC: Finding optima by esti- mating probability densities. In Proceedings of the 9th International Conference on Neural Information Processing Systems, pages 424–430, Cambridge, MA, USA, 1996. MIT Press.
+- [8] G Hayes. mlrose: Machine Learning, Randomized Optimization and SEarch package for python. https://github.com/gkhayes/mlrose, 2019. Accessed: 10/09/2019.
