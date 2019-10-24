@@ -1,7 +1,7 @@
 # CS7641 - Machine Learning Github Repository 
 https://github.com/ezerilli/Machine_Learning
 
-### SETTING UP THE ENVIRONMENT 👨🏻‍💻
+### SETTING UP THE ENVIRONMENT 👨🏻‍💻👨🏻‍💻👨🏻‍💻
 
 The following steps lead to setup the working environment for [CS7641 - Machine Learning](https://www.omscs.gatech.edu/cs-7641-machine-learning) 
 in the [OMSCS](http://www.omscs.gatech.edu) program. 👨🏻‍💻‍📚‍‍‍‍
@@ -37,9 +37,7 @@ conda deactivate
 conda env update -f requirements.yml
 ```
 
-### ASSIGNMENT1 - SUPERVISED LEARNING
-
-‍🔥🔥🔥
+### ASSIGNMENT1 - SUPERVISED LEARNING ‍🔥🔥🔥
 
 This assignment aims to explore 5 **Supervised Learning** algorithms (**k-Nearest Neighbors**, **Support Vector Machines**, 
 **Decision Trees**, **AdaBoost** and **Neural Networks**) and to perform model complexity analysis and learning curves while 
@@ -64,9 +62,7 @@ However, they have already been saved into the images directory. Theory, results
 report (not provided here due to Georgia Tech's Honor Code).
 
 
-### ASSIGNMENT2 - RANDOMIZED OPTIMIZATION
-
-🔥🔥🔥
+### ASSIGNMENT2 - RANDOMIZED OPTIMIZATION 🔥🔥🔥
 
 This assignment aims to explore some algorithms in **Randomized Optimization**, namely **Random-Hill Climbing (RHC)**, **Simulated 
 Annealing (SA)**, **Genetic Algorithms (GA)** and **Mutual-Information Maximizing Input Clustering (MIMIC)**, while comparing 
@@ -90,11 +86,11 @@ Figures will show up progressively. It takes a while to perform all the experime
 However, they have already been saved into the images directory. Theory, results and experiments are discussed in the 
 report (not provided here due to Georgia Tech's Honor Code). 
 
-### ASSIGNMENT3 - UNSUPERVISED LEARNING
+### ASSIGNMENT3 - UNSUPERVISED LEARNING 🔥🔥🔥
 
-Work in progress 🔥🔥🔥
+Work in progress !
 
 
-### ASSIGNMENT4 - MARKOV DECISION PROCESSES
+### ASSIGNMENT4 - MARKOV DECISION PROCESSES 🔥🔥🔥
 
-Work in progress 🔥🔥🔥
+Work in progress !
