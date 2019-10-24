@@ -46,10 +46,10 @@ and the **Handwritten Digits Image Classification (the famous MNIST)**.
 
 The assignment consists of two parts: 
 
-- *experiment 1*, producing validation curves, learning curves and performances on the test set, for each of the 
+- _experiment 1_, producing validation curves, learning curves and performances on the test set, for each of the 
 algorithms, on the **Wisconsin Diagnostic Breast Cancer (WDBC)** dataset.
 
-- *experiment 2*, producing validation curves, learning curves and performances on the test set, for each of the 
+- _experiment 2_, producing validation curves, learning curves and performances on the test set, for each of the 
 algorithms, on the **Handwritten Digits Image Classification (MNIST)** dataset.
 
 In order to run the assignment, you just need to move to the supervised learning directory, then execute `run_experiments.py`:
@@ -64,18 +64,18 @@ report (not provided here because of Georgia Tech's Honor Code).
 
 ### ASSIGNMENT2 - RANDOMIZED OPTIMIZATION
 
-Assignment 2 aims to explore some algorithms in **Randomized Optimization**, namely *Random-Hill Climbing* (RHC), *Simulated 
-Annealing* (SA), *Genetic Algorithms* (GA) and *Mutual-Information Maximizing Input Clustering* (MIMIC), while comparing 
-their performances on 3 interesting discrete optimisation problems: the *Travel Salesman Problem*, *Flip Flop* and *4-Peaks*. 
-Moreover, RHC, SA and GA will be compared to *Gradient Descent* and *Backpropagation* on a (nowadays) fundamental optimization 
-problem: training complex *Neural Networks*.
+Assignment 2 aims to explore some algorithms in **Randomized Optimization**, namely _Random-Hill Climbing_ (RHC), _Simulated 
+Annealing_ (SA), _Genetic Algorithms_ (GA) and _Mutual-Information Maximizing Input Clustering* (MIMIC), while comparing 
+their performances on 3 interesting discrete optimisation problems: the _Travel Salesman Problem_, _Flip Flop_ and _4-Peaks_. 
+Moreover, RHC, SA and GA will be compared to _Gradient Descent_ and _Backpropagation_ on a (nowadays) fundamental optimization 
+problem: training complex _Neural Networks_.
 
 The assignment consists of four parts: 
 
-- *experiment 1*, producing complexity and performances curves for the *Travel Salesman* problem.
-- *experiment 2*, producing complexity and performances curves for *Flip Flop*.
-- *experiment 3*, producing complexity and performances curves for *4-Peak*.
-- *experiment 4*, producing complexity and performances curves for *Neural Networks* training.
+- _experiment 1_, producing complexity and performances curves for the _Travel Salesman_ problem.
+- _experiment 2_, producing complexity and performances curves for _Flip Flop_.
+- _experiment 3_, producing complexity and performances curves for _4-Peak_.
+- _experiment 4_, producing complexity and performances curves for _Neural Networks_ training.
 
 In order to run the assignment, you just need to move to randomised optimization directory and then execute `run_experiments.py`:
 ```bash
