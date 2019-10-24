@@ -3,8 +3,8 @@ https://github.com/ezerilli/Machine_Learning
 
 ### SETTING UP THE ENVIRONMENT
 
-The following steps lead to setup the working environment for **CS7641 - Machine Learning** in the **OMSCS** program: 
-[OMSCS/CS7641](https://www.omscs.gatech.edu/cs-7641-machine-learning). 👨🏻‍💻👨🏻‍💻👨🏻‍💻📚📚📚
+The following steps lead to setup the working environment for [CS7641 - Machine Learning](https://www.omscs.gatech.edu/cs-7641-machine-learning) 
+in the [OMSCS](http://www.omscs.gatech.edu) program.  👨🏻‍💻👨🏻‍💻👨🏻‍💻📚📚📚
 
 Installing the conda environment is a ready-to-use solution to be able to run python scripts without having to worry 
 about the packages and versions used. Alternatively you can install each of the packages in requirements.yml on your 
