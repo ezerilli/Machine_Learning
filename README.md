@@ -1,8 +1,10 @@
-**CS7641 - Machine Learning Github Repository (https://github.com/ezerilli/Machine_Learning)**
+# CS7641 - Machine Learning Github Repository 
+https://github.com/ezerilli/Machine_Learning
 
-**SETTING UP THE ENVIRONMENT**
+## SETTING UP THE ENVIRONMENT
 
-The following steps leads to setup the working environment for CS7641 - Machine Learning in the OMSCS program.
+The following steps lead to setup the working environment for **CS7641 - Machine Learning in the OMSCS program: 
+https://www.omscs.gatech.edu/cs-7641-machine-learning**.
 
 Installing the conda environment is a ready-to-use solution to be able to run python scripts without having to worry 
 about the packages and versions used. Alternatively you can install each of the packages in requirements.yml on your 
@@ -37,7 +39,7 @@ installed this environment, you just need to update it:
 conda env update -f requirements.yml
 ```
 
-**ASSIGNMENT1 - SUPERVISED LEARNING**
+### ASSIGNMENT1 - SUPERVISED LEARNING
 
 Assignment 1 aims to explore some algorithms in Supervised Learning, perform model complexity analysis and learning 
 curves while comparing their performances on two interesting datasets: the Wisconsin Diagnostic Breast Cancer (WDBC) 
@@ -62,7 +64,7 @@ However, they have already been saved into the images directory. Theory, results
 report.
 
 
-**ASSIGNMENT2 - RANDOMIZED OPTIMIZATION**
+### ASSIGNMENT2 - RANDOMIZED OPTIMIZATION
 
 Assignment 2 aims to explore some algorithms in Randomized Optimization, namely Random-Hill Climbing (RHC), Simulated 
 Annealing (SA), Genetic Algorithms (GA) and MIMIC, while comparing their performances on 3 interesting discrete 
@@ -86,11 +88,11 @@ Figures will show up progressively. It takes a while to perform all the experime
 However, they have already been saved into the images directory. Theory, results and experiments are discussed in the 
 report.
 
-**ASSIGNMENT3 - UNSUPERVISED LEARNING**
+### ASSIGNMENT3 - UNSUPERVISED LEARNING
 
 Work in progress ! 🔥🔥🔥
 
 
-**ASSIGNMENT4 - MARKOV DECISION PROCESSES**
+### ASSIGNMENT4 - MARKOV DECISION PROCESSES
 
 Work in progress ! 🔥🔥🔥
