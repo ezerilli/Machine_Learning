@@ -32,26 +32,25 @@ python my_file.py
 conda deactivate
 ```
 
-7. During the semester I may need to add some new packages to the environment. So, in the case you have previously 
-installed this environment, you just need to update it:
+7. During the semester I may need to add some new packages to the environment. So, to update it run:
 ```bash
 conda env update -f requirements.yml
 ```
 
 ### ASSIGNMENT1 - SUPERVISED LEARNING
 
-Assignment 1 aims to explore 5  **Supervised Learning** algorithms (*k-Nearest Neighbors*, *Support Vector Machines*, 
-*Decision Trees*, *AdaBoost* and *Neural Networks*), perform model complexity analysis and learning curves while 
+This Assignment aims to explore 5 **Supervised Learning** algorithms (**k-Nearest Neighbors**, **Support Vector Machines**, 
+**Decision Trees**, **AdaBoost** and **Neural Networks**), perform model complexity analysis and learning curves while 
 comparing their performances on two interesting datasets: the **Wisconsin Diagnostic Breast Cancer (WDBC)** and the 
 **Handwritten Digits Image Classification (the famous MNIST)**.
 
 The assignment consists of two parts: 
 
 - _experiment 1_, producing validation curves, learning curves and performances on the test set, for each of the 
-algorithms, on the **Wisconsin Diagnostic Breast Cancer (WDBC)** dataset.
+algorithms, on the _Wisconsin Diagnostic Breast Cancer (WDBC)_ dataset.
 
 - _experiment 2_, producing validation curves, learning curves and performances on the test set, for each of the 
-algorithms, on the **Handwritten Digits Image Classification (MNIST)** dataset.
+algorithms, on the _Handwritten Digits Image Classification (MNIST)_ dataset.
 
 In order to run the assignment, you just need to move to the supervised learning directory, then execute `run_experiments.py`:
 ```bash
@@ -65,18 +64,18 @@ report (not provided here because of Georgia Tech's Honor Code).
 
 ### ASSIGNMENT2 - RANDOMIZED OPTIMIZATION
 
-Assignment 2 aims to explore some algorithms in **Randomized Optimization**, namely *Random-Hill Climbing (RHC)*, *Simulated 
-Annealing (SA)*, *Genetic Algorithms (GA)* and *Mutual-Information Maximizing Input Clustering (MIMIC)*, while comparing 
-their performances on 3 interesting discrete optimisation problems: the *Travel Salesman Problem*, *Flip Flop* and *4-Peaks*. 
-Moreover, RHC, SA and GA will be compared to *Gradient Descent* and *Backpropagation* on a (nowadays) fundamental optimization 
-problem: training complex *Neural Networks*.
+Assignment 2 aims to explore some algorithms in **Randomized Optimization**, namely **Random-Hill Climbing (RHC)**, **Simulated 
+Annealing (SA)**, **Genetic Algorithms (GA)** and **Mutual-Information Maximizing Input Clustering (MIMIC)**, while comparing 
+their performances on 3 interesting discrete optimisation problems: the **Travel Salesman Problem**, **Flip Flop** and **4-Peaks**. 
+Moreover, RHC, SA and GA will be compared to **Gradient Descent** and **Backpropagation** on a (nowadays) fundamental optimization 
+problem: training complex **Neural Networks**.
 
 The assignment consists of four parts: 
 
-- _experiment 1_, producing complexity and performances curves for the *Travel Salesman* problem.
-- _experiment 2_, producing complexity and performances curves for *Flip Flop*.
-- _experiment 3_, producing complexity and performances curves for *4-Peaks*.
-- _experiment 4_, producing complexity and performances curves for *Neural Networks* training.
+- _experiment 1_, producing complexity and performances curves for the _Travel Salesman_ problem.
+- _experiment 2_, producing complexity and performances curves for _Flip Flop_.
+- _experiment 3_, producing complexity and performances curves for _4-Peaks_.
+- _experiment 4_, producing complexity and performances curves for _Neural Networks_ training.
 
 In order to run the assignment, you just need to move to randomised optimization directory and then execute `run_experiments.py`:
 ```bash
