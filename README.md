@@ -1,10 +1,10 @@
 # CS7641 - Machine Learning Github Repository 
 https://github.com/ezerilli/Machine_Learning
 
-### SETTING UP THE ENVIRONMENT
+### SETTING UP THE ENVIRONMENT 👨🏻‍💻
 
 The following steps lead to setup the working environment for [CS7641 - Machine Learning](https://www.omscs.gatech.edu/cs-7641-machine-learning) 
-in the [OMSCS](http://www.omscs.gatech.edu) program. 👨🏻‍💻📚
+in the [OMSCS](http://www.omscs.gatech.edu) program. 👨🏻‍💻‍📚‍‍‍‍
 
 Installing the conda environment is a ready-to-use solution to be able to run python scripts without having to worry 
 about the packages and versions used. Alternatively, you can install each of the packages in `requirements.yml` on your 
@@ -39,6 +39,8 @@ conda env update -f requirements.yml
 
 ### ASSIGNMENT1 - SUPERVISED LEARNING
 
+‍🔥🔥🔥
+
 This assignment aims to explore 5 **Supervised Learning** algorithms (**k-Nearest Neighbors**, **Support Vector Machines**, 
 **Decision Trees**, **AdaBoost** and **Neural Networks**) and to perform model complexity analysis and learning curves while 
 comparing their performances on two interesting datasets: the **Wisconsin Diagnostic Breast Cancer (WDBC)** and the 
@@ -64,6 +66,8 @@ report (not provided here due to Georgia Tech's Honor Code).
 
 ### ASSIGNMENT2 - RANDOMIZED OPTIMIZATION
 
+🔥🔥🔥
+
 This assignment aims to explore some algorithms in **Randomized Optimization**, namely **Random-Hill Climbing (RHC)**, **Simulated 
 Annealing (SA)**, **Genetic Algorithms (GA)** and **Mutual-Information Maximizing Input Clustering (MIMIC)**, while comparing 
 their performances on 3 interesting discrete optimisation problems: the **Travel Salesman Problem**, **Flip Flop** and **4-Peaks**. 
@@ -88,9 +92,9 @@ report (not provided here due to Georgia Tech's Honor Code).
 
 ### ASSIGNMENT3 - UNSUPERVISED LEARNING
 
-Work in progress ! 🔥🔥🔥
+Work in progress 🔥🔥🔥
 
 
 ### ASSIGNMENT4 - MARKOV DECISION PROCESSES
 
-Work in progress ! 🔥🔥🔥
+Work in progress 🔥🔥🔥
