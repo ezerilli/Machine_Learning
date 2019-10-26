@@ -54,7 +54,7 @@ algorithms, on the _Handwritten Digits Image Classification (MNIST)_ dataset.
 
 In order to run the experiments, run:
 ```bash
-cd Supervised\ Learning/
+cd Supervised_Learning
 python run_experiments.py
 ```
 Figures will show up progressively. It takes a while to perform all the experiments and hyperparameter optimizations. 
@@ -79,7 +79,7 @@ The assignment consists of four parts:
 
 In order to run the experiments, run:
 ```bash
-cd Randomized\ Optimization/
+cd Randomized_Optimization
 python run_experiments.py
 ```
 Figures will show up progressively. It takes a while to perform all the experiments and parameters optimizations. 
