@@ -67,7 +67,7 @@ class KNN(BaseClassifier):
         # Initialize best values
         best_score, best_k, best_weight, best_p = 0., 1, '', 2
 
-        # Create a new figure for number of neighbors and weight function validation curve and set proper arguments
+        # Create a new figure for the number of neighbors and weight function validation curve and set proper arguments
         plt.figure()
         kwargs['param'] = 'knn__n_neighbors'
         kwargs['param_range'] = kwargs['n_neighbors_range']
@@ -84,7 +84,7 @@ class KNN(BaseClassifier):
             kwargs['train_label'] = 'Training, {} weights'.format(weight)
             kwargs['val_label'] = 'Cross-Validation, {} weights'.format(weight)
 
-            # Plot validation curve for neighbors number and weight function and get its optimal value and score
+            # Plot validation curve for the neighbors number and weight function and get optimal value and score
             k, score = super(KNN, self).plot_model_complexity(x_train, y_train, **kwargs)
             print('--> k = {}, weight = {} --> score = {:.4f}'.format(k, weight, score))
 
@@ -97,7 +97,7 @@ class KNN(BaseClassifier):
         self.optimal_params['knn__weights'] = best_weight
         plt.savefig(IMAGE_DIR + '{}_k'.format(self.name))
 
-        # Create a new figure for Minkowski degree p validation curve and set proper arguments
+        # Create a new figure for the Minkowski degree p validation curve and set proper arguments
         plt.figure()
         kwargs['param'] = 'knn__p'
         kwargs['param_range'] = kwargs['p_range']
@@ -105,7 +105,7 @@ class KNN(BaseClassifier):
         kwargs['train_label'] = 'Training'
         kwargs['val_label'] = 'Cross-Validation'
 
-        # Plot validation curve for Minkowski degree p and get its optimal value and score
+        # Plot validation curve for the Minkowski degree p and get optimal value and score
         best_p, score = super(KNN, self).plot_model_complexity(x_train, y_train, **kwargs)
         print('--> p = {} --> score = {:.4f}'.format(best_p, score))
 
