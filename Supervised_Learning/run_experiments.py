@@ -101,7 +101,7 @@ def load_dataset(dataset='WDBC', split_percentage=0.2, visualize=False):
                 plt.xticks(())
                 plt.yticks(())
 
-        plt.show()
+            plt.show()
 
     else:
         # Else dataset not available
