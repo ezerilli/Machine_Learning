@@ -52,6 +52,7 @@ class KNN(BaseClassifier):
                kwargs (dict): additional arguments to pass for model complexity curves plotting:
                     - n_neighbors_range (ndarray or list): array or list of values for the number of neighbors k.
                     - p_range (ndarray or list): array or list of values for the Minkowski degree p.
+                    - weight_functions (ndarray or list): array or list of values for the weight function.
                     - cv (int): number of k-folds in cross-validation.
                     - y_lim (float): lower y axis limit.
 
@@ -76,7 +77,7 @@ class KNN(BaseClassifier):
         # For all different weight functions
         for weight in kwargs['weight_functions']:
 
-            # Set this weight function as if was an optimal parameter
+            # Set current weight function as if was an optimal parameter
             self.optimal_params['knn__weights'] = weight
 
             # Set training and validation label for current weight function
@@ -87,7 +88,7 @@ class KNN(BaseClassifier):
             k, score = super(KNN, self).plot_model_complexity(x_train, y_train, **kwargs)
             print('--> k = {}, weight = {} --> score = {:.4f}'.format(k, weight, score))
 
-            # if this score is higher than the best score found so far, update best values
+            # If this score is higher than the best score found so far, update best values
             if score > best_score:
                 best_score, best_k, best_weight = score, k, weight
 
