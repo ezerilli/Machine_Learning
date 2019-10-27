@@ -46,8 +46,8 @@ class DecisionTree(BaseClassifier):
                x_train (ndarray): training data.
                y_train (ndarray): training labels.
                kwargs (dict): additional arguments to pass for model complexity curves plotting:
-                    - max_depth_range (ndarray or list): array or list of values for maximum depth.
-                    - min_samples_leaf_range (ndarray or list): array or list of values for minimum samples per leaf.
+                    - max_depth_range (ndarray or list): array or list of values for the maximum depth.
+                    - min_samples_leaf_range (ndarray or list): array or list of values for the minimum samples per leaf.
                     - cv (int): number of k-folds in cross-validation.
                     - y_lim (float): lower y axis limit.
 
@@ -59,7 +59,7 @@ class DecisionTree(BaseClassifier):
         print('\n\nModel Complexity Analysis')
         self.optimal_params = self.default_params.copy()
 
-        # Create a new figure for maximum depth validation curve and set proper arguments
+        # Create a new figure for the maximum depth validation curve and set proper arguments
         plt.figure()
         kwargs['param'] = 'dt__max_depth'
         kwargs['param_range'] = kwargs['max_depth_range']
@@ -68,7 +68,7 @@ class DecisionTree(BaseClassifier):
         kwargs['train_label'] = 'Training'
         kwargs['val_label'] = 'Cross-Validation'
 
-        # Plot validation curve for maximum depth and get its optimal value and corresponding score
+        # Plot validation curve for the maximum depth and get optimal value and corresponding score
         best_max_depth, score = super(DecisionTree, self).plot_model_complexity(x_train, y_train, **kwargs)
         print('--> max_depth = {} --> score = {:.4f}'.format(best_max_depth, score))
 
@@ -76,13 +76,13 @@ class DecisionTree(BaseClassifier):
         self.optimal_params['dt__max_depth'] = best_max_depth
         plt.savefig(IMAGE_DIR + '{}_max_depth'.format(self.name))
 
-        # Create a new figure for minimum samples per leaf validation curve and set proper arguments
+        # Create a new figure for the minimum samples per leaf validation curve and set proper arguments
         plt.figure()
         kwargs['param'] = 'dt__min_samples_leaf'
         kwargs['param_range'] = kwargs['min_samples_leaf_range']
         kwargs['x_label'] = 'Min Samples per Leaf'
 
-        # Plot validation curve for minimum samples per leaf and get its optimal value and corresponding score
+        # Plot validation curve for the minimum samples per leaf and get optimal value and corresponding score
         best_min_samples, score = super(DecisionTree, self).plot_model_complexity(x_train, y_train, **kwargs)
         print('--> min_samples_leaf = {} --> score = {:.4f}'.format(best_min_samples, score))
 
