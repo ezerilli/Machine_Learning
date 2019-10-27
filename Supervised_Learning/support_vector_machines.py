@@ -55,7 +55,7 @@ class SVM(BaseClassifier):
                     - C_range (ndarray or list): array or list of values for the regularization term.
                     - kernels (ndarray or list): array or list of values for kernels.
                     - gamma_range (ndarray or list): array or list of values for the gamma value.
-                    - poly_degrees (ndarray or list): array or list of values for polynomial degree p.
+                    - poly_degrees (ndarray or list): array or list of values for the polynomial degree p.
                     - cv (int): number of k-folds in cross-validation.
                     - y_lim (float): lower y axis limit.
 
@@ -69,7 +69,7 @@ class SVM(BaseClassifier):
         # Initialize best values
         best_score, best_c, best_kernel, best_d, best_gamma = 0., 1., '', 3, 0.001
 
-        # Create a new figure for regularization term validation curve and set proper arguments
+        # Create a new figure for the regularization term validation curve and set proper arguments
         plt.figure()
         kwargs['param'] = 'svm__C'
         kwargs['param_range'] = kwargs['C_range']
@@ -86,7 +86,7 @@ class SVM(BaseClassifier):
             kwargs['train_label'] = 'Training, {} kernel'.format(kernel)
             kwargs['val_label'] = 'Cross-Validation, {} kernel'.format(kernel)
 
-            # Plot validation curve for regualrization term and kernels and get its optimal value and score
+            # Plot validation curve for the regualrization term and kernels and get optimal value and score
             c, score = super(SVM, self).plot_model_complexity(x_train, y_train, **kwargs)
             print('--> c = {}, kernel = {} --> score = {:.4f}'.format(c, kernel, score))
 
@@ -99,7 +99,7 @@ class SVM(BaseClassifier):
         self.optimal_params['svm__kernel'] = best_kernel
         plt.savefig(IMAGE_DIR + '{}_c'.format(self.name))
 
-        # Create a new figure for gamma value validation curve and set proper arguments
+        # Create a new figure for the gamma value validation curve and set proper arguments
         plt.figure()
         kwargs['param'] = 'svm__gamma'
         kwargs['param_range'] = kwargs['gamma_range']
@@ -126,7 +126,7 @@ class SVM(BaseClassifier):
                 kwargs['train_label'] = 'Training' + label
                 kwargs['val_label'] = 'Cross-Validation' + label
 
-                # Plot validation curve for gamma value and kernels and get its optimal value and score
+                # Plot validation curve for the gamma value and kernels and get optimal value and score
                 gamma, score = super(SVM, self).plot_model_complexity(x_train, y_train, **kwargs)
                 print('--> gamma = {:.4f}, kernel = {}, d = {} --> score = {:.4f}'.format(gamma, kernel, d, score))
 
