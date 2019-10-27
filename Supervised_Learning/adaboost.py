@@ -50,9 +50,9 @@ class AdaBoost(BaseClassifier):
                x_train (ndarray): training data.
                y_train (ndarray): training labels.
                kwargs (dict): additional arguments to pass for model complexity curves plotting:
-                    - max_depth_range (ndarray or list): array or list of values for maximum depth.
-                    - n_estimators_range (ndarray or list): array or list of values for number of estimators.
-                    - learning_rate_range (ndarray or list): array or list of values for learning rate.
+                    - max_depth_range (ndarray or list): array or list of values for the maximum depth.
+                    - n_estimators_range (ndarray or list): array or list of values for the number of estimators.
+                    - learning_rate_range (ndarray or list): array or list of values for the learning rate.
                     - cv (int): number of k-folds in cross-validation.
                     - y_lim (float): lower y axis limit.
 
@@ -64,7 +64,7 @@ class AdaBoost(BaseClassifier):
         print('\n\nModel Complexity Analysis')
         self.optimal_params = self.default_params.copy()
 
-        # Create a new figure for maximum depth validation curve and set proper arguments
+        # Create a new figure for the maximum depth validation curve and set proper arguments
         plt.figure()
         kwargs['param'] = 'adaboost__base_estimator__max_depth'
         kwargs['param_range'] = kwargs['max_depth_range']
@@ -73,7 +73,7 @@ class AdaBoost(BaseClassifier):
         kwargs['train_label'] = 'Training'
         kwargs['val_label'] = 'Cross-Validation'
 
-        # Plot validation curve for maximum depth and get its optimal value and corresponding score
+        # Plot validation curve for the maximum depth and get optimal value and corresponding score
         best_max_depth, score = super(AdaBoost, self).plot_model_complexity(x_train, y_train, **kwargs)
         print('--> max_depth = {} --> score = {:.4f}'.format(best_max_depth, score))
 
@@ -81,13 +81,13 @@ class AdaBoost(BaseClassifier):
         self.optimal_params['adaboost__base_estimator__max_depth'] = best_max_depth
         plt.savefig(IMAGE_DIR + '{}_max_depth'.format(self.name))
 
-        # Create a new figure for number of estimators validation curve and set proper arguments
+        # Create a new figure for the number of estimators validation curve and set proper arguments
         plt.figure()
         kwargs['param'] = 'adaboost__n_estimators'
         kwargs['param_range'] = kwargs['n_estimators_range']
         kwargs['x_label'] = 'Number of Estimators'
 
-        # Plot validation curve for number of estimators and get its optimal value and corresponding score
+        # Plot validation curve for the number of estimators and get optimal value and corresponding score
         best_n_estimators, score = super(AdaBoost, self).plot_model_complexity(x_train, y_train, **kwargs)
         print('--> n_estimators = {} --> score = {:.4f}'.format(best_n_estimators, score))
 
@@ -95,14 +95,14 @@ class AdaBoost(BaseClassifier):
         self.optimal_params['adaboost__n_estimators'] = best_n_estimators
         plt.savefig(IMAGE_DIR + '{}_n_estimators'.format(self.name))
 
-        # Create a new figure for learning rate validation curve and set proper arguments
+        # Create a new figure for the learning rate validation curve and set proper arguments
         plt.figure()
         kwargs['param'] = 'adaboost__learning_rate'
         kwargs['param_range'] = kwargs['learning_rate_range']
         kwargs['x_label'] = 'Learning Rate'
         kwargs['x_scale'] = 'log'
 
-        # Plot validation curve for learning rate and get its optimal value and corresponding score
+        # Plot validation curve for the learning rate and get optimal value and corresponding score
         best_learning_rate, score = super(AdaBoost, self).plot_model_complexity(x_train, y_train, **kwargs)
         print('--> learning_rate = {} --> score = {:.4f}'.format(best_learning_rate, score))
 
