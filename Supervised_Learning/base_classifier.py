@@ -17,6 +17,7 @@ class BaseClassifier(ABC):
 
     def __init__(self, name):
         """Initialize a base classifier.
+
             Args:
                 name (string): name of the classifier.
             Returns:
@@ -29,6 +30,7 @@ class BaseClassifier(ABC):
 
     def evaluate(self, x_test, y_test):
         """Evaluate the model by reporting the classification report and the confusion matrix.
+
             Args:
                 x_test (ndarray): test set data.
                 y_test (ndarray): test set labels.
@@ -45,6 +47,7 @@ class BaseClassifier(ABC):
 
     def fit(self, x_train, y_train):
         """Fit the model by on the training data.
+
             Args:
                 x_train (ndarray): train set data.
                 y_train (ndarray): train set labels.
@@ -61,6 +64,7 @@ class BaseClassifier(ABC):
 
     def predict(self, x):
         """Predict on some test data.
+
             Args:
                 x (ndarray): data to predict.
 
@@ -78,6 +82,7 @@ class BaseClassifier(ABC):
 
     def get_model_parameters(self):
         """Get model parameters.
+
             Args:
                None.
 
@@ -88,6 +93,7 @@ class BaseClassifier(ABC):
 
     def set_model_parameters(self, **params):
         """Set model parameters.
+
             Args:
                params (dict): model parameters.
 
@@ -100,6 +106,7 @@ class BaseClassifier(ABC):
     @staticmethod
     def _plot_helper_(x_axis, train_scores, val_scores, train_label, val_label):
         """Plot helper.
+
             Args:
                x_axis (ndarray): x axis array.
                train_scores (ndarray): array of training scores.
@@ -127,6 +134,7 @@ class BaseClassifier(ABC):
 
     def plot_learning_curve(self, x_train, y_train, **kwargs):
         """Plot learning curves with cross-validation.
+
             Args:
                x_train (ndarray): training data.
                y_train (ndarray): training labels.
@@ -169,9 +177,8 @@ class BaseClassifier(ABC):
         if kwargs['y_lim']:
             plt.ylim(kwargs['y_lim'], 1.01)
 
-        # Save figure and show
+        # Save figure
         plt.savefig(IMAGE_DIR + '{}_learning_curve'.format(self.name))
-        plt.show()
 
     @abstractmethod
     def plot_model_complexity(self, x_train, y_train, **kwargs):
