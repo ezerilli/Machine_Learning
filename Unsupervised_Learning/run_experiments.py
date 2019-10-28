@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 from sklearn.datasets import load_breast_cancer, fetch_openml
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 IMAGE_DIR = 'images/'
 
@@ -52,6 +53,11 @@ def load_dataset(dataset='WDBC', split_percentage=0.2):
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=split_percentage, shuffle=True,
                                                         random_state=42, stratify=y)
 
+    # Normalize feature data
+    scaler = StandardScaler()
+    x_train = scaler.fit_transform(x_train)
+    x_test = scaler.transform(x_test)
+
     print('\nTotal dataset size:')
     print('Number of instances: {}'.format(x.shape[0]))
     print('Number of features: {}'.format(x.shape[1]))
@@ -75,8 +81,10 @@ def experiment(x_train, x_test, y_train, y_test):
            None.
         """
 
-    # TODO : swrite unsupervised learning
+    # TODO : write unsupervised learning
 
+
+if __name__ == "__main__":
 
     # Run experiment 1 on WDBC
     print('\n--------------------------')

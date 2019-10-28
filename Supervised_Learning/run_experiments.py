@@ -107,7 +107,7 @@ def load_dataset(dataset='WDBC', split_percentage=0.2, visualize=False):
         # Else dataset not available
         raise Exception('Wrong dataset name. Datasets available = {}'.format(datasets))
 
-    # Slit dataset in training and validation sets, preserving classes representation
+    # Split dataset in training and validation sets, preserving classes representation
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=split_percentage, shuffle=True,
                                                         random_state=42, stratify=y)
 

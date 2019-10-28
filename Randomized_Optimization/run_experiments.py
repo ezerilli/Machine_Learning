@@ -1,3 +1,4 @@
+# Script to run experiments
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,7 +21,19 @@ times = []
 
 
 def load_dataset(split_percentage=0.2):
+    """Load WDBC dataset.
 
+       Args:
+           split_percentage (float): validation split.
+
+       Returns:
+           x_train (ndarray): training data.
+           x_test (ndarray): test data.
+           y_train (ndarray): training labels.
+           y_test (ndarray): test labels.
+       """
+
+    # Loadt dataset and split in training and validation sets, preserving classes representation
     data = load_breast_cancer()
     x, y, labels, features = data.data, data.target, data.target_names, data.feature_names
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=split_percentage, shuffle=True,
@@ -41,7 +54,7 @@ def load_dataset(split_percentage=0.2):
     return x_train, x_test, y_train, y_test
 
 
-def flip_plot(length, random_seeds):
+def flip_plop(length, random_seeds):
 
     flip_flop_objective = FlipFlop()
     problem = DiscreteOpt(length=length, fitness_fn=flip_flop_objective, maximize=True, max_val=2)
@@ -531,19 +544,21 @@ def travel_salesman(length, distances, random_seeds):
                       plot_name='TSP', plot_ylabel='Cost')
 
 
-random_seeds = [5 + 5 * i for i in range(5)]
-cities_distances = [(0, 1, 0.274), (0, 2, 1.367), (1, 2, 1.091), (0, 3, 1.422), (1, 3, 1.153), (2, 3, 1.038),
-                    (0, 4, 1.870), (1, 4, 1.602), (2, 4, 1.495), (3, 4, 0.475), (0, 5, 1.652), (1, 5, 1.381),
-                    (2, 5, 1.537), (3, 5, 0.515), (4, 5, 0.539), (0, 6, 1.504), (1, 6, 1.324), (2, 6, 1.862),
-                    (3, 6, 1.060), (4, 6, 1.097), (5, 6, 0.664), (0, 7, 1.301), (1, 7, 1.031), (2, 7, 1.712),
-                    (3, 7, 1.031), (4, 7, 1.261), (5, 7, 0.893), (6, 7, 0.350), (0, 8, 1.219), (1, 8, 0.948),
-                    (2, 8, 1.923), (3, 8, 1.484), (4, 8, 1.723), (5, 8, 1.396), (6, 8, 0.872), (7, 8, 0.526),
-                    (0, 9, 0.529), (1, 9, 0.258), (2, 9, 1.233), (3, 9, 1.137), (4, 9, 1.560), (5, 9, 1.343),
-                    (6, 9, 1.131), (7, 9, 0.816), (8, 9, 0.704)]
+if __name__ == "__main__":
 
-# travel_salesman(length=10, distances=cities_distances, random_seeds=random_seeds)
-# flip_plot(length=100, random_seeds=random_seeds)
-# four_peaks(length=100, random_seeds=random_seeds)
+    random_seeds = [5 + 5 * i for i in range(5)]
+    cities_distances = [(0, 1, 0.274), (0, 2, 1.367), (1, 2, 1.091), (0, 3, 1.422), (1, 3, 1.153), (2, 3, 1.038),
+                        (0, 4, 1.870), (1, 4, 1.602), (2, 4, 1.495), (3, 4, 0.475), (0, 5, 1.652), (1, 5, 1.381),
+                        (2, 5, 1.537), (3, 5, 0.515), (4, 5, 0.539), (0, 6, 1.504), (1, 6, 1.324), (2, 6, 1.862),
+                        (3, 6, 1.060), (4, 6, 1.097), (5, 6, 0.664), (0, 7, 1.301), (1, 7, 1.031), (2, 7, 1.712),
+                        (3, 7, 1.031), (4, 7, 1.261), (5, 7, 0.893), (6, 7, 0.350), (0, 8, 1.219), (1, 8, 0.948),
+                        (2, 8, 1.923), (3, 8, 1.484), (4, 8, 1.723), (5, 8, 1.396), (6, 8, 0.872), (7, 8, 0.526),
+                        (0, 9, 0.529), (1, 9, 0.258), (2, 9, 1.233), (3, 9, 1.137), (4, 9, 1.560), (5, 9, 1.343),
+                        (6, 9, 1.131), (7, 9, 0.816), (8, 9, 0.704)]
 
-x_train, x_test, y_train, y_test = load_dataset(split_percentage=0.2)
-neural_network(x_train, x_test, y_train, y_test, random_seeds=random_seeds)
+    travel_salesman(length=10, distances=cities_distances, random_seeds=random_seeds)
+    flip_plop(length=100, random_seeds=random_seeds)
+    four_peaks(length=100, random_seeds=random_seeds)
+
+    x_train, x_test, y_train, y_test = load_dataset(split_percentage=0.2)
+    neural_network(x_train, x_test, y_train, y_test, random_seeds=random_seeds)
