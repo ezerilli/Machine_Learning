@@ -1,4 +1,4 @@
-# Script to run experiments
+# Randomized Optimization utils
 
 import numpy as np
 import matplotlib.pyplot as plt
