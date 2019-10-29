@@ -43,11 +43,17 @@ def set_plot_title_labels(title, x_label, y_label):
     plt.ylabel(y_label)
 
 
-def time_callback(iteration):
+def time_callback(iteration, attempt=None, done=None, state=None, fitness=None, curve=None, user_data=None):
     """Time callback for saving time elapsed at each iteration of the algorithm.
 
         Args:
           iteration (int): current iteration.
+          attempt (int): current attempt.
+          done (bool): id we are done iterating.
+          state (list): current best state.
+          fitness (float): current best fitness.
+          curve (ndarray): current fitness curve.
+          user_data (any): current iteration.
 
         Returns:
           continue (bool): True, to continue iterating.

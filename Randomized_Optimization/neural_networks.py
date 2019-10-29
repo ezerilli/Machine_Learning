@@ -2,6 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 import utils
 
 from mlrose.algorithms.decay import ExpDecay
@@ -75,8 +76,6 @@ def plot_nn_performances(x_train, y_train, random_seeds, **kwargs):
             # For each max iterations to run for
             for max_iter in kwargs[max_iters[i]]:
 
-                print('Iteration = {}'.format(max_iter))
-
                 # Define Neural Network using current algorithm
                 nn = NeuralNetwork(hidden_nodes=[50, 30], activation='relu',
                                    algorithm=algorithm, max_iters=int(max_iter),
@@ -86,7 +85,6 @@ def plot_nn_performances(x_train, y_train, random_seeds, **kwargs):
                                    max_attempts=int(max_iter), random_state=random_seed, curve=False)
 
                 # Train on current training fold and append training time
-                global start_time
                 start_time = time.time()
                 nn.fit(x_train_fold, y_train_fold)
                 train_times.append(time.time() - start_time)
@@ -96,7 +94,7 @@ def plot_nn_performances(x_train, y_train, random_seeds, **kwargs):
                 val_loss = log_loss(y_val_fold, nn.predict(x_val_fold))
                 train_losses.append(train_loss)
                 val_losses.append(val_loss)
-                print('\ntrain loss = {}, val loss = {}'.format(train_loss, val_loss))
+                print('{} - train loss = {:.3f}, val loss = {:.3f}'.format(max_iter, train_loss, val_loss))
 
             # Append curves for current random seed to corresponding lists of curves
             train_curves.append(train_losses)

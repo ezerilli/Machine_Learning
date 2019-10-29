@@ -7,7 +7,6 @@ import utils
 from mlrose.algorithms import random_hill_climb, simulated_annealing, genetic_alg, mimic
 from mlrose.algorithms.decay import ExpDecay
 
-
 IMAGE_DIR = 'images/'
 
 
@@ -93,7 +92,7 @@ def plot_ga_mimic_optimization(problem, param_name, random_seeds, **kwargs):
     plt.figure()
     utils.plot_helper(x_axis=kwargs[param_name + 's'], y_axis=np.array(ga_curve).T, label='GA')
     utils.plot_helper(x_axis=kwargs[param_name + 's'], y_axis=np.array(mimic_curve).T, label='MIMIC')
-    utils.set_plot_title_labels(title='{} - Objective vs. {}}'.format(kwargs['plot_name'], label),
+    utils.set_plot_title_labels(title='{} - Objective vs. {}'.format(kwargs['plot_name'], label),
                                 x_label=label,
                                 y_label=kwargs['plot_ylabel'])
 
@@ -148,7 +147,7 @@ def plot_sa_optimization(problem, random_seeds, **kwargs):
 
     # Plot, set title and labels
     plt.figure()
-    utils.plot_helper(x_axis=kwargs['sa_exp_consts'], y_axis=np.array(sa_curve).T, label='SA')
+    utils.plot_helper(x_axis=kwargs['sa_decay_rates'], y_axis=np.array(sa_curve).T, label='SA')
     utils.set_plot_title_labels(title='{} - Objective vs. temperature exponential decay rate'.format(kwargs['plot_name']),
                                 x_label='Exponential decay rate',
                                 y_label=kwargs['plot_ylabel'])
@@ -234,8 +233,8 @@ def plot_performances(problem, random_seeds, **kwargs):
                                                                callback_user_info=[])
 
         rhc_objectives.append(objective_curve)
-        rhc_times.append(times)
-        print('RHC: best_objective = {:.3f}'.format(best_objective))
+        rhc_times.append(utils.times)
+        print('\nRHC: best_objective = {:.3f}'.format(best_objective))
 
         # Run SA and get best state and objective found
         _, best_objective, objective_curve = simulated_annealing(problem,
@@ -247,7 +246,7 @@ def plot_performances(problem, random_seeds, **kwargs):
                                                                  callback_user_info=[])
 
         sa_objectives.append(objective_curve)
-        sa_times.append(times)
+        sa_times.append(utils.times)
         print('SA: best_objective = {:.3f}'.format(best_objective))
 
         # Run GA and get best state and objective found
@@ -261,7 +260,7 @@ def plot_performances(problem, random_seeds, **kwargs):
                                                          callback_user_info=[])
 
         ga_objectives.append(objective_curve)
-        ga_times.append(times)
+        ga_times.append(utils.times)
         print('GA: best_objective = {:.3f}'.format(best_objective))
 
         # Run MIMIC and get best state and objective found
@@ -275,7 +274,7 @@ def plot_performances(problem, random_seeds, **kwargs):
                                                    callback_user_info=[])
 
         mimic_objectives.append(objective_curve)
-        mimic_times.append(times)
+        mimic_times.append(utils.times)
         print('MIMIC: best_objective = {:.3f}'.format(best_objective))
 
     # Array of iterations to plot objectives vs. for RHC, SA, GA and MIMIC

@@ -68,6 +68,7 @@ def flip_plop(length, random_seeds):
     problem.set_mimic_fast_mode(True)  # set fast MIMIC
 
     # Plot optimizations for RHC, SA, GA and MIMIC
+    print('\nPlot Optimizations for SA, GA and MIMIC')
     ro.plot_optimizations(problem=problem,
                           random_seeds=random_seeds,
                           rhc_max_iters=1000, sa_max_iters=1000, ga_max_iters=250, mimic_max_iters=50,
@@ -77,6 +78,7 @@ def flip_plop(length, random_seeds):
                           plot_name='Flip Flop', plot_ylabel='Fitness')
 
     # Plot performances for RHC, SA, GA and MIMIC
+    print('\nPlot Optimizations for RHC, SA, GA and MIMIC')
     ro.plot_performances(problem=problem,
                          random_seeds=random_seeds,
                          rhc_max_iters=1000, sa_max_iters=1000, ga_max_iters=500, mimic_max_iters=100,
@@ -106,6 +108,7 @@ def four_peaks(length, random_seeds):
     problem.set_mimic_fast_mode(True)  # set fast MIMIC
 
     # Plot optimizations for RHC, SA, GA and MIMIC
+    print('\nPlot Optimizations for SA, GA and MIMIC')
     ro.plot_optimizations(problem=problem,
                           random_seeds=random_seeds,
                           rhc_max_iters=10000, sa_max_iters=10000, ga_max_iters=250, mimic_max_iters=250,
@@ -114,6 +117,8 @@ def four_peaks(length, random_seeds):
                           pop_sizes=np.arange(100, 1001, 100), keep_pcts=np.arange(0.1, 0.81, 0.1),
                           plot_name='Four Peaks', plot_ylabel='Fitness')
 
+    # Plot performances for RHC, SA, GA and MIMIC
+    print('\nPlot Optimizations for RHC, SA, GA and MIMIC')
     ro.plot_performances(problem=problem,
                          random_seeds=random_seeds,
                          rhc_max_iters=7000, sa_max_iters=7000, ga_max_iters=250, mimic_max_iters=250,
@@ -152,7 +157,7 @@ def neural_network(x_train, x_test, y_train, y_test, random_seeds):
 
     # Test performances for RHC, SA, GA and GD with Neural Networks
     nn.test_nn_performances(x_train, x_test, y_train, y_test,
-                            random_seeds=random_seeds[0], max_iters=200,
+                            random_seed=random_seeds[0], max_iters=200,
                             init_temp=100, exp_decay_rate=0.1, min_temp=0.001,
                             pop_size=100, mutation_prob=0.2)
 
@@ -177,7 +182,8 @@ def travel_salesman(length, distances, random_seeds):
     problem = TSPOpt(length=length, fitness_fn=tsp_objective, maximize=False)
     problem.set_mimic_fast_mode(True)  # set fast MIMIC
 
-    # Plot optimizations for RHC, SA, GA and MIMIC
+    # Plot optimizations for SA, GA and MIMIC
+    print('\nPlot Optimizations for SA, GA and MIMIC')
     ro.plot_optimizations(problem=problem,
                           random_seeds=random_seeds,
                           rhc_max_iters=500, sa_max_iters=500, ga_max_iters=50, mimic_max_iters=10,
@@ -187,7 +193,8 @@ def travel_salesman(length, distances, random_seeds):
                           plot_name='TSP', plot_ylabel='Cost')
 
     # Plot performances for RHC, SA, GA and MIMIC
-    nn.plot_performances(problem=problem,
+    print('\nPlot Optimizations for RHC, SA, GA and MIMIC')
+    ro.plot_performances(problem=problem,
                          random_seeds=random_seeds,
                          rhc_max_iters=500, sa_max_iters=500, ga_max_iters=50, mimic_max_iters=10,
                          sa_init_temp=100, sa_exp_decay_rate=0.03, sa_min_temp=0.001,
@@ -198,7 +205,7 @@ def travel_salesman(length, distances, random_seeds):
 
 if __name__ == "__main__":
 
-    random_seeds = [5 + 5 * i for i in range(5)]  # random seeds for get performances over multiple random runs
+    random_seeds = [5 + 5 * i for i in range(2)]  # random seeds for get performances over multiple random runs
 
     # Define list of inter-distances between each pair of the following cities (in order from 0 to 9):
     # Rome, Florence, Barcelona, Paris, London, Amsterdam, Berlin, Prague, Budapest, Venice
