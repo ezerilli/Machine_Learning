@@ -1,4 +1,4 @@
-# Script to run experiments
+# Plot and time helper functions
 
 import numpy as np
 import matplotlib.pyplot as plt

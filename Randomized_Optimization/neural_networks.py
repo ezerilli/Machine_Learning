@@ -1,4 +1,4 @@
-# Neural Networks utils
+# Neural Networks
 
 import numpy as np
 import matplotlib.pyplot as plt

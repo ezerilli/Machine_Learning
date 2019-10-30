@@ -1,4 +1,4 @@
-# Randomized Optimization utils
+# Randomized Optimization script
 
 import numpy as np
 import matplotlib.pyplot as plt
