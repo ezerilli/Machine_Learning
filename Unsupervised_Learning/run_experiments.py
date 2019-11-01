@@ -1,11 +1,12 @@
 # Script to run experiments
 
-import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import utils
 
 from clustering import KMeansClustering, MixtureOfGaussians
+from dimensionality_reduction import PrincipalComponents, RandomProjections
 
 # from neural_networks import NeuralNetwork
 
@@ -53,17 +54,17 @@ def load_dataset(dataset='WDBC', split_percentage=0.2, visualize=False):
             sns.set(style='darkgrid')
             sns.countplot(x='labels', data=df, palette={'B': 'b', 'M': 'r'})
             plt.title('{} Instances Distribution'.format(dataset))
-            plt.savefig(IMAGE_DIR + '{}_Instances_Distribution'.format(dataset))
+            utils.save_figure('{}_Instances_Distribution'.format(dataset))
 
             # Plot heatmap of correlations
             plt.figure(figsize=(15, 15))
             sns.heatmap(df.corr(), annot=True, square=True, cmap='coolwarm')
-            plt.savefig(IMAGE_DIR + '{}_Features_Correlation'.format(dataset))
+            utils.save_figure('{}_Features_Correlation'.format(dataset))
 
             # Plot scatter matrix of features
             plt.figure(figsize=(15, 15))
             sns.pairplot(df, hue='labels', palette={'B': 'b', 'M': 'r'})
-            plt.savefig(IMAGE_DIR + '{}_Scatter_Matrix_of_Features'.format(dataset))
+            utils.save_figure('{}_Scatter_Matrix_of_Features'.format(dataset))
 
             # Plot features distributions
             bins = 12
@@ -77,8 +78,7 @@ def load_dataset(dataset='WDBC', split_percentage=0.2, visualize=False):
                 plt.legend(loc='lower left')
                 plt.xlabel(feature)
 
-            plt.tight_layout()
-            plt.savefig(IMAGE_DIR + '{}_Features_Discrimination'.format(dataset))
+            utils.save_figure('{}_Features_Discrimination'.format(dataset))
             plt.close(fig='all')
 
     elif dataset == datasets[1]:
@@ -111,6 +111,11 @@ def load_dataset(dataset='WDBC', split_percentage=0.2, visualize=False):
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=split_percentage, shuffle=True,
                                                         random_state=42, stratify=y)
 
+    # Normalize feature data
+    scaler = StandardScaler()
+    x_train = scaler.fit_transform(x_train)
+    x_test = scaler.transform(x_test)
+
     print('\nTotal dataset size:')
     print('Number of instances: {}'.format(x.shape[0]))
     print('Number of features: {}'.format(x.shape[1]))
@@ -121,7 +126,7 @@ def load_dataset(dataset='WDBC', split_percentage=0.2, visualize=False):
     return x_train, x_test, y_train, y_test
 
 
-def clustering_experiment(x_train, x_test, y_train, y_test, dataset):
+def clustering(x_train, x_test, y_train, y_test, **kwargs):
     """Perform experiment.
 
         Args:
@@ -134,22 +139,38 @@ def clustering_experiment(x_train, x_test, y_train, y_test, dataset):
            None.
         """
 
-    if dataset == 'WDBC':
-        best_n_clusters = 2
-    elif dataset == 'MNIST':
-        best_n_clusters = 2
-    else:
-        raise Exception('Wrong dataset name. Choose one between WDBC and MNIST')
-
-    # print('\n--------------------------')
-    # print('k - Means')
-    # kmeans = KMeansClustering(n_clusters=best_n_clusters)
-    # kmeans.experiment(x_train, x_test, y_train, y_test, dataset, max_n_clusters=14)
+    print('\n--------------------------')
+    print('kMeans')
+    kmeans = KMeansClustering(n_clusters=kwargs['kmeans_n_clusters'], max_n_clusters=10)
+    kmeans.experiment(x_train, x_test, y_train, y_test, dataset=kwargs['dataset'], perform_model_complexity=False)
 
     print('\n--------------------------')
     print('EM')
-    gmm = MixtureOfGaussians(n_clusters=best_n_clusters)
-    gmm.experiment(x_train, x_test, y_train, y_test, dataset, max_n_clusters=14)
+    gmm = MixtureOfGaussians(n_clusters=kwargs['em_n_clusters'], covariance=kwargs['em_covariance'], max_n_clusters=10)
+    gmm.experiment(x_train, x_test, y_train, y_test, dataset=kwargs['dataset'], perform_model_complexity=False)
+
+
+def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
+    """Perform experiment.
+
+        Args:
+           x_train (ndarray): training data.
+           x_test (ndarray): test data.
+           y_train (ndarray): training labels.
+
+        Returns:
+           None.
+        """
+
+    print('\n--------------------------')
+    print('PCA')
+    pca = PrincipalComponents(n_components=kwargs['pca_n_components'])
+    pca.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perfrom_model_complexity=True)
+
+    print('\n--------------------------')
+    print('RP')
+    rp = RandomProjections(n_components=kwargs['rp_n_components'])
+    rp.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perfrom_model_complexity=True)
 
 
 if __name__ == "__main__":
@@ -158,10 +179,24 @@ if __name__ == "__main__":
     print('\n--------------------------')
     dataset = 'WDBC'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
-    clustering_experiment(x_train, x_test, y_train, y_test, dataset)
+    clustering(x_train, x_test, y_train, y_test,
+               dataset=dataset,
+               kmeans_n_clusters=2,
+               em_n_clusters=2, em_covariance='full')
+    dimensionality_reduction(x_train, x_test, y_train,
+                             dataset=dataset,
+                             pca_n_components=15,
+                             rp_n_components=20)
 
     # Run experiment 2 on MNIST
     print('\n--------------------------')
     dataset = 'MNIST'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
-    clustering_experiment(x_train, x_test, y_train, y_test, dataset)
+    clustering(x_train, x_test, y_train, y_test,
+               dataset=dataset,
+               kmeans_n_clusters=2,
+               em_n_clusters=10, em_covariance='diag')
+    dimensionality_reduction(x_train, x_test, y_train,
+                             dataset=dataset,
+                             pca_n_components=2,
+                             rp_n_components=2)
