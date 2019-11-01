@@ -10,8 +10,6 @@ import utils
 
 from abc import ABC, abstractmethod
 
-from matplotlib.patches import Ellipse
-
 from scipy.stats import mode
 
 from sklearn.cluster import KMeans
@@ -60,6 +58,16 @@ class Clustering(ABC):
 
         return labels
 
+    def _plot_clusters_(self, x, y, df, y_colors, clusters_colors, dataset):
+
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 5))
+        sns.scatterplot(x=x, y=y, hue='y', palette=y_colors, data=df, legend='full', alpha=0.3, ax=ax1)
+        sns.scatterplot(x=x, y=y, hue='c', palette=clusters_colors, data=df, legend='full', alpha=0.3, ax=ax2)
+
+        plt.title('{} - {} clusters represented by {}'.format(dataset, self.name, x[:-1].upper()))
+        plt.tight_layout()
+        plt.savefig(IMAGE_DIR + '{}_{}_clusters_{}'.format(dataset, self.name, x[:-1]))
+
     @abstractmethod
     def plot_model_complexity(self, x, max_n_clusters, dataset):
         pass
@@ -101,20 +109,9 @@ class Clustering(ABC):
         df['y'] = y
         df['c'] = self.clusters
 
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 5))
-        sns.scatterplot(x='tsne1', y='tsne2', hue='y', palette=y_colors, data=df, legend='full', alpha=0.3, ax=ax1)
-        sns.scatterplot(x='tsne1', y='tsne2', hue='c', palette=clusters_colors, data=df, legend='full', alpha=0.3, ax=ax2)
+        self._plot_clusters_('tsne1', 'tsne2', df, y_colors, clusters_colors, dataset)
+        self._plot_clusters_('pca1', 'pca2', df, y_colors, clusters_colors, dataset)
 
-        plt.tight_layout()
-        plt.savefig(IMAGE_DIR + '{}_{}_clusters_tsne'.format(dataset, self.name))
-
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 5))
-        sns.scatterplot(x='pca1', y='pca2', hue='y', palette=y_colors, data=df, legend='full', alpha=0.3, ax=ax1)
-        sns.scatterplot(x='pca1', y='pca2', hue='c', palette=clusters_colors, data=df, legend='full', alpha=0.3, ax=ax2)
-
-        plt.tight_layout()
-        plt.savefig(IMAGE_DIR + '{}_{}_clusters_pca'.format(dataset, self.name))
-        
 
 class KMeansClustering(Clustering):
     
@@ -238,4 +235,3 @@ class MixtureOfGaussians(Clustering):
 
         # Save figure
         plt.savefig(IMAGE_DIR + '{}_{}_model_complexity'.format(dataset, self.name))
-
