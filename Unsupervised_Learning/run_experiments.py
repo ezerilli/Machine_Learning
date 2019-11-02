@@ -175,8 +175,8 @@ def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
 
     clustering(x_pca[0], x_pca[1], y_train, y_test,
                dataset=dataset + '_pca_reduced',
-               kmeans_n_clusters=kwargs['kmeans_n_clusters'],
-               em_n_clusters=kwargs['em_n_clusters'], em_covariance=kwargs['em_covariance'],
+               kmeans_n_clusters=kwargs['pca_kmeans_n_clusters'],
+               em_n_clusters=kwargs['pca_em_n_clusters'], em_covariance=kwargs['pca_em_covariance'],
                perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
@@ -188,8 +188,8 @@ def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
 
     clustering(x_ica[0], x_ica[1], y_train, y_test,
                dataset=dataset + '_ica_reduced',
-               kmeans_n_clusters=kwargs['kmeans_n_clusters'],
-               em_n_clusters=kwargs['em_n_clusters'], em_covariance=kwargs['em_covariance'],
+               kmeans_n_clusters=kwargs['ica_kmeans_n_clusters'],
+               em_n_clusters=kwargs['ica_em_n_clusters'], em_covariance=kwargs['ica_em_covariance'],
                perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
@@ -201,8 +201,8 @@ def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
 
     clustering(x_kpca[0], x_kpca[1], y_train, y_test,
                dataset=dataset + '_kpca_reduced',
-               kmeans_n_clusters=kwargs['kmeans_n_clusters'],
-               em_n_clusters=kwargs['em_n_clusters'], em_covariance=kwargs['em_covariance'],
+               kmeans_n_clusters=kwargs['kpca_kmeans_n_clusters'],
+               em_n_clusters=kwargs['kpca_em_n_clusters'], em_covariance=kwargs['kpca_em_covariance'],
                perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
@@ -214,8 +214,8 @@ def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
 
     clustering(x_rp[0], x_rp[1], y_train, y_test,
                dataset=dataset + '_rp_reduced',
-               kmeans_n_clusters=kwargs['kmeans_n_clusters'],
-               em_n_clusters=kwargs['em_n_clusters'], em_covariance=kwargs['em_covariance'],
+               kmeans_n_clusters=kwargs['rp_kmeans_n_clusters'],
+               em_n_clusters=kwargs['rp_em_n_clusters'], em_covariance=kwargs['rp_em_covariance'],
                perform_model_complexity=kwargs['perform_model_complexity'])
 
 
@@ -226,39 +226,43 @@ if __name__ == "__main__":
     dataset = 'WDBC'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
 
-    # clustering(x_train, x_test, y_train, y_test,
-    #            dataset=dataset,
-    #            kmeans_n_clusters=2,
-    #            em_n_clusters=2, em_covariance='full',
-    #            perform_model_complexity=False)
+    clustering(x_train, x_test, y_train, y_test,
+               dataset=dataset,
+               kmeans_n_clusters=2,
+               em_n_clusters=2, em_covariance='full',
+               perform_model_complexity=False)
 
     dimensionality_reduction(x_train, x_test, y_train,
                              dataset=dataset,
-                             pca_n_components=10,
-                             ica_n_components=12,
-                             rp_n_components=20,
-                             kpca_n_components=10, kpca_kernel='cosine',
-                             kmeans_n_clusters=2,
-                             em_n_clusters=2, em_covariance='full',
-                             perform_model_complexity=True)
+                             pca_n_components=10, pca_kmeans_n_clusters=2,
+                             pca_em_n_clusters=4, pca_em_covariance='diag',
+                             ica_n_components=12, ica_kmeans_n_clusters=2,
+                             ica_em_n_clusters=5, ica_em_covariance='diag',
+                             kpca_n_components=10, kpca_kernel='cosine', kpca_kmeans_n_clusters=2,
+                             kpca_em_n_clusters=4, kpca_em_covariance='diag',
+                             rp_n_components=20, rp_kmeans_n_clusters=2,
+                             rp_em_n_clusters=3, rp_em_covariance='full',
+                             perform_model_complexity=False)
 
     # Run experiment 2 on MNIST
     print('\n--------------------------')
     dataset = 'MNIST'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
 
-    # clustering(x_train, x_test, y_train, y_test,
-    #            dataset=dataset,
-    #            kmeans_n_clusters=2,
-    #            em_n_clusters=10, em_covariance='diag',
-    #            perform_model_complexity=False)
+    clustering(x_train, x_test, y_train, y_test,
+               dataset=dataset,
+               kmeans_n_clusters=2,
+               em_n_clusters=10, em_covariance='diag',
+               perform_model_complexity=False)
 
     dimensionality_reduction(x_train, x_test, y_train,
                              dataset=dataset,
-                             pca_n_components=250,
-                             ica_n_components=320,
-                             rp_n_components=500,
-                             kpca_n_components=250, kpca_kernel='sigmoid',
-                             kmeans_n_clusters=2,
-                             em_n_clusters=10, em_covariance='diag',
-                             perform_model_complexity=True)
+                             pca_n_components=260, pca_kmeans_n_clusters=2,
+                             pca_em_n_clusters=6, pca_em_covariance='full',
+                             ica_n_components=320, ica_kmeans_n_clusters=2,
+                             ica_em_n_clusters=10, ica_em_covariance='diag',
+                             kpca_n_components=260, kpca_kernel='poly', kpca_kmeans_n_clusters=2,
+                             kpca_em_n_clusters=3, kpca_em_covariance='full',
+                             rp_n_components=400, rp_kmeans_n_clusters=2,
+                             rp_em_n_clusters=2, rp_em_covariance='full',
+                             perform_model_complexity=False)

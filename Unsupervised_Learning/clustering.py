@@ -9,6 +9,7 @@ import utils
 
 from abc import ABC, abstractmethod
 
+from sklearn.base import clone
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
@@ -19,12 +20,13 @@ from sklearn.mixture import GaussianMixture
 
 class Clustering(ABC):
 
-    def __init__(self, name, n_clusters, max_n_clusters, random_seed):
+    def __init__(self, name, n_clusters, max_n_clusters, name_param, random_seed):
         self.name = name
         self.model = None
         self.clusters = None
         self.n_clusters = n_clusters
         self.max_n_clusters = max_n_clusters
+        self.name_param = name_param
         self.random_seed = random_seed
 
     @staticmethod
@@ -58,7 +60,7 @@ class Clustering(ABC):
 
     def train(self, x, y):
 
-        print('\nTrain on training set')
+        print('\nTrain on training set with k={}'.format(self.n_clusters))
         self.clusters = self.model.fit_predict(x)
         self.benchmark(x, y, self.clusters)
 
@@ -70,13 +72,24 @@ class Clustering(ABC):
         tsne = TSNE(n_components=2, random_state=self.random_seed)
         x_tsne = tsne.fit_transform(x)
 
+        n_classes = len(np.unique(y))
+
+        model = clone(self.model)
+        model_params = self.model.get_params()
+        model_params[self.name_param] = n_classes
+        model.set_params(**model_params)
+        print('\nBenchmark Model with k={}'.format(n_classes))
+        clusters = model.fit_predict(x)
+        self.benchmark(x, y, clusters)
+
         df = pd.DataFrame(x_tsne, columns=['tsne1', 'tsne2'])
         df['pca1'] = x_pca[:, 0]
         df['pca2'] = x_pca[:, 1]
         df['y'] = y
+        df['true c'] = clusters
         df['c'] = self.clusters
 
-        fig, (ax1, ax2) = plt.subplots(2, 2, figsize=(12, 8))
+        fig, (ax1, ax2) = plt.subplots(2, 3, figsize=(15, 8))
 
         utils.plot_clusters(ax1, 'pca1', 'pca2', df, y, self.name)
         utils.plot_clusters(ax2, 'tsne1', 'tsne2', df, y, self.name)
@@ -86,8 +99,8 @@ class Clustering(ABC):
 class KMeansClustering(Clustering):
     
     def __init__(self,  n_clusters=2, max_n_clusters=10, random_seed=42):
-        super(KMeansClustering, self).__init__(name='k-means', n_clusters=n_clusters,
-                                               max_n_clusters=max_n_clusters, random_seed=random_seed)
+        super(KMeansClustering, self).__init__(name='k-means', n_clusters=n_clusters, max_n_clusters=max_n_clusters,
+                                               name_param='n_clusters', random_seed=random_seed)
 
         self.model = KMeans(n_clusters=n_clusters, init='k-means++', max_iter=1000, random_state=random_seed, n_jobs=-1)
 
@@ -162,8 +175,8 @@ class KMeansClustering(Clustering):
 class MixtureOfGaussians(Clustering):
     
     def __init__(self, n_clusters=2, covariance='full', max_n_clusters=10, random_seed=42):
-        super(MixtureOfGaussians, self).__init__(name='em', n_clusters=n_clusters,
-                                                 max_n_clusters=max_n_clusters, random_seed=random_seed)
+        super(MixtureOfGaussians, self).__init__(name='em', n_clusters=n_clusters, max_n_clusters=max_n_clusters,
+                                                 name_param='n_components', random_seed=random_seed)
 
         self.model = GaussianMixture(n_components=n_clusters, covariance_type=covariance, max_iter=1000,
                                      n_init=10, init_params='random', random_state=random_seed)
