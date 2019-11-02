@@ -37,14 +37,13 @@ class Clustering(ABC):
                                                                       adjusted_mutual_info_score(y, labels, average_method='arithmetic'),
                                                                       silhouette_score(x, labels, metric='euclidean')))
 
-    def experiment(self, x_train, x_test, y_train, y_test, dataset, perform_model_complexity):
+    def experiment(self, x_train, y_train, dataset, perform_model_complexity):
 
         if perform_model_complexity:
             self.plot_model_complexity(x_train, dataset)
 
         self.train(x_train, y_train)
         self.visualize_clusters(x_train, y_train, dataset)
-        self.test(x_test, y_test)
 
     @abstractmethod
     def plot_model_complexity(self, x, dataset):
@@ -54,11 +53,8 @@ class Clustering(ABC):
         self.n_clusters = n_clusters
         self.model.set_params(**{'n_clusters': n_clusters})
 
-    def test(self, x, y):
-
-        print('\nTest on test set')
-        clusters = self.model.predict(x)
-        self.benchmark(x, y, clusters)
+    def predict(self, x, y):
+        return self.model.predict(x)
 
     def train(self, x, y):
 
@@ -84,7 +80,7 @@ class Clustering(ABC):
 
         utils.plot_clusters(ax1, 'pca1', 'pca2', df, y, self.name)
         utils.plot_clusters(ax2, 'tsne1', 'tsne2', df, y, self.name)
-        utils.save_figure('{}_{}_clusters'.format(dataset, self.name))
+        utils.save_figure_tight('{}_{}_clusters'.format(dataset, self.name))
 
 
 class KMeansClustering(Clustering):
@@ -120,7 +116,7 @@ class KMeansClustering(Clustering):
         self.visualize_silhouette(x, ax)
 
         # Save figure
-        utils.save_figure('{}_{}_model_complexity'.format(dataset, self.name))
+        utils.save_figure_tight('{}_{}_model_complexity'.format(dataset, self.name))
 
     def visualize_silhouette(self, x, ax):
 
@@ -199,4 +195,4 @@ class MixtureOfGaussians(Clustering):
         utils.plot_ic_bars(bic, 'BIC', cv_types, k_range, ax2)
 
         # Save figure
-        utils.save_figure('{}_{}_model_complexity'.format(dataset, self.name))
+        utils.save_figure_tight('{}_{}_model_complexity'.format(dataset, self.name))

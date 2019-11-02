@@ -6,7 +6,7 @@ import seaborn as sns
 import utils
 
 from clustering import KMeansClustering, MixtureOfGaussians
-from dimensionality_reduction import IndependentComponents, NonNegativeMatrix, PrincipalComponents, RandomProjections
+from dimensionality_reduction import IndependentComponents, KernelPrincipalComponents, PrincipalComponents, RandomProjections
 
 # from neural_networks import NeuralNetwork
 
@@ -142,12 +142,16 @@ def clustering(x_train, x_test, y_train, y_test, **kwargs):
     print('\n--------------------------')
     print('kMeans')
     kmeans = KMeansClustering(n_clusters=kwargs['kmeans_n_clusters'], max_n_clusters=10)
-    kmeans.experiment(x_train, x_test, y_train, y_test, dataset=kwargs['dataset'], perform_model_complexity=False)
+    kmeans.experiment(x_train, y_train,
+                      dataset=kwargs['dataset'],
+                      perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
     print('EM')
     gmm = MixtureOfGaussians(n_clusters=kwargs['em_n_clusters'], covariance=kwargs['em_covariance'], max_n_clusters=10)
-    gmm.experiment(x_train, x_test, y_train, y_test, dataset=kwargs['dataset'], perform_model_complexity=False)
+    gmm.experiment(x_train, y_train,
+                   dataset=kwargs['dataset'],
+                   perform_model_complexity=kwargs['perform_model_complexity'])
 
 
 def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
@@ -165,22 +169,54 @@ def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
     print('\n--------------------------')
     print('PCA')
     pca = PrincipalComponents(n_components=kwargs['pca_n_components'])
-    pca.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perform_model_complexity=False)
+    x_pca = pca.experiment(x_train, x_test, y_train,
+                           dataset=kwargs['dataset'],
+                           perform_model_complexity=kwargs['perform_model_complexity'])
+
+    clustering(x_pca[0], x_pca[1], y_train, y_test,
+               dataset=dataset + '_pca_reduced',
+               kmeans_n_clusters=kwargs['kmeans_n_clusters'],
+               em_n_clusters=kwargs['em_n_clusters'], em_covariance=kwargs['em_covariance'],
+               perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
     print('ICA')
     ica = IndependentComponents(n_components=kwargs['ica_n_components'])
-    ica.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perform_model_complexity=False)
+    x_ica = ica.experiment(x_train, x_test, y_train,
+                           dataset=kwargs['dataset'],
+                           perform_model_complexity=kwargs['perform_model_complexity'])
+
+    clustering(x_ica[0], x_ica[1], y_train, y_test,
+               dataset=dataset + '_ica_reduced',
+               kmeans_n_clusters=kwargs['kmeans_n_clusters'],
+               em_n_clusters=kwargs['em_n_clusters'], em_covariance=kwargs['em_covariance'],
+               perform_model_complexity=kwargs['perform_model_complexity'])
+
+    print('\n--------------------------')
+    print('KPCA')
+    kpca = KernelPrincipalComponents(n_components=kwargs['kpca_n_components'], kernel=kwargs['kpca_kernel'])
+    x_kpca = kpca.experiment(x_train, x_test, y_train,
+                             dataset=kwargs['dataset'],
+                             perform_model_complexity=kwargs['perform_model_complexity'])
+
+    clustering(x_kpca[0], x_kpca[1], y_train, y_test,
+               dataset=dataset + '_kpca_reduced',
+               kmeans_n_clusters=kwargs['kmeans_n_clusters'],
+               em_n_clusters=kwargs['em_n_clusters'], em_covariance=kwargs['em_covariance'],
+               perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
     print('RP')
     rp = RandomProjections(n_components=kwargs['rp_n_components'])
-    rp.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perform_model_complexity=False)
+    x_rp = rp.experiment(x_train, x_test, y_train,
+                         dataset=kwargs['dataset'],
+                         perform_model_complexity=kwargs['perform_model_complexity'])
 
-    print('\n--------------------------')
-    print('NMF')
-    nmf = NonNegativeMatrix(n_components=kwargs['nmf_n_components'])
-    nmf.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perform_model_complexity=True)
+    clustering(x_rp[0], x_rp[1], y_train, y_test,
+               dataset=dataset + '_rp_reduced',
+               kmeans_n_clusters=kwargs['kmeans_n_clusters'],
+               em_n_clusters=kwargs['em_n_clusters'], em_covariance=kwargs['em_covariance'],
+               perform_model_complexity=kwargs['perform_model_complexity'])
 
 
 if __name__ == "__main__":
@@ -189,28 +225,40 @@ if __name__ == "__main__":
     print('\n--------------------------')
     dataset = 'WDBC'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
+
     # clustering(x_train, x_test, y_train, y_test,
     #            dataset=dataset,
     #            kmeans_n_clusters=2,
-    #            em_n_clusters=2, em_covariance='full')
+    #            em_n_clusters=2, em_covariance='full',
+    #            perform_model_complexity=False)
+
     dimensionality_reduction(x_train, x_test, y_train,
                              dataset=dataset,
                              pca_n_components=10,
                              ica_n_components=12,
                              rp_n_components=20,
-                             nmf_n_components=15)
+                             kpca_n_components=10, kpca_kernel='cosine',
+                             kmeans_n_clusters=2,
+                             em_n_clusters=2, em_covariance='full',
+                             perform_model_complexity=True)
 
     # Run experiment 2 on MNIST
     print('\n--------------------------')
     dataset = 'MNIST'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
+
     # clustering(x_train, x_test, y_train, y_test,
     #            dataset=dataset,
     #            kmeans_n_clusters=2,
-    #            em_n_clusters=10, em_covariance='diag')
+    #            em_n_clusters=10, em_covariance='diag',
+    #            perform_model_complexity=False)
+
     dimensionality_reduction(x_train, x_test, y_train,
                              dataset=dataset,
                              pca_n_components=250,
                              ica_n_components=320,
                              rp_n_components=500,
-                             nmf_n_components=400)
+                             kpca_n_components=250, kpca_kernel='sigmoid',
+                             kmeans_n_clusters=2,
+                             em_n_clusters=10, em_covariance='diag',
+                             perform_model_complexity=True)

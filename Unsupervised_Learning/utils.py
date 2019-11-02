@@ -7,24 +7,42 @@ import seaborn as sns
 IMAGE_DIR = 'images/'
 
 
-def plot_clusters(ax, x_label, y_label, df, y, name):
-    clusters_colors = sns.color_palette('hls', len(np.unique(df['c'])))
+def plot_clusters(ax, component1, component2, df, y, name):
+    c_colors = sns.color_palette('hls', len(np.unique(df['c'])))
     y_colors = sns.color_palette('hls', len(np.unique(y)))
 
-    sns.scatterplot(x=x_label, y=y_label, hue='y', palette=y_colors, data=df, legend='full', alpha=0.3, ax=ax[0])
-    sns.scatterplot(x=x_label, y=y_label, hue='c', palette=clusters_colors, data=df, legend='full', alpha=0.3, ax=ax[1])
+    sns.scatterplot(x=component1, y=component2, hue='y', palette=y_colors, data=df, legend='full', alpha=0.3, ax=ax[0])
+    sns.scatterplot(x=component1, y=component2, hue='c', palette=c_colors, data=df, legend='full', alpha=0.3, ax=ax[1])
 
-    ax[0].set_title('True Clusters represented with {}'.format(x_label[:-1].upper()))
-    ax[1].set_title('{} Clusters represented with {}'.format(name.upper(), x_label[:-1].upper()))
+    ax[0].set_title('True Clusters represented with {}'.format(component1[:-1].upper()))
+    ax[1].set_title('{} Clusters represented with {}'.format(name.upper(), component1[:-1].upper()))
+
+    xlim = 1.1 * np.max(np.abs(df[component1]))
+    ylim = 1.1 * np.max(np.abs(df[component2]))
+
+    ax[0].set_xlim(-xlim, xlim)
+    ax[1].set_xlim(-xlim, xlim)
+    ax[0].set_ylim(-ylim, ylim)
+    ax[1].set_ylim(-ylim, ylim)
 
 
 def plot_components(component1, component2, df, y, name):
     plt.figure()
     colors = sns.color_palette('hls', len(np.unique(y)))
     sns.scatterplot(x=component1, y=component2, hue='y', palette=colors, data=df, legend='full', alpha=0.3)
-    # plt.quiver(0, 0, pca.singular_values_[0], pca.singular_values_[1], zorder=11, width=0.01, scale=6, color='red')
+
+    std_1 = np.std(df[component1])
+    std_2 = np.std(df[component2])
+    plt.annotate('', xy=(std_1, 0), xytext=(0, 0), arrowprops=dict(arrowstyle='->', color='orange', lw=3))
+    plt.annotate('', xy=(0, std_2), xytext=(0, 0), arrowprops=dict(arrowstyle='->', color='orange', lw=3))
 
     plt.title('{} Transformation with first 2 components and true labels'.format(name.upper()))
+
+    xlim = 1.1 * np.max(np.abs(df[component1]))
+    ylim = 1.1 * np.max(np.abs(df[component2]))
+
+    plt.xlim(-xlim, xlim)
+    plt.ylim(-ylim, ylim)
 
 
 def plot_multiple_random_runs(x_axis, y_axis, label):
@@ -60,8 +78,14 @@ def plot_ic_bars(ic, ic_label, cv_types, k_range, ax):
 
 
 def save_figure(title):
+    plt.savefig(IMAGE_DIR + title)
+    plt.close()
+
+
+def save_figure_tight(title):
     plt.tight_layout()
     plt.savefig(IMAGE_DIR + title)
+    plt.close()
 
 
 def set_axis_title_labels(ax, title, x_label, y_label):
