@@ -41,7 +41,7 @@ def plot_multiple_random_runs(x_axis, y_axis, label):
         """
 
     y_mean, y_std = np.mean(y_axis, axis=0), np.std(y_axis, axis=0)
-    plot = plt.plot(x_axis, y_mean, '-o', markersize=2, label=label)
+    plot = plt.plot(x_axis, y_mean, '-o', markersize=1, label=label)
     plt.fill_between(x_axis, y_mean - y_std, y_mean + y_std, alpha=0.1, color=plot[0].get_color())
 
 

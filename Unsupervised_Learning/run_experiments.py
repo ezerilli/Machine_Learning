@@ -6,7 +6,7 @@ import seaborn as sns
 import utils
 
 from clustering import KMeansClustering, MixtureOfGaussians
-from dimensionality_reduction import PrincipalComponents, RandomProjections
+from dimensionality_reduction import IndependentComponents, NonNegativeMatrix, PrincipalComponents, RandomProjections
 
 # from neural_networks import NeuralNetwork
 
@@ -165,12 +165,22 @@ def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
     print('\n--------------------------')
     print('PCA')
     pca = PrincipalComponents(n_components=kwargs['pca_n_components'])
-    pca.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perfrom_model_complexity=True)
+    pca.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perform_model_complexity=False)
+
+    print('\n--------------------------')
+    print('ICA')
+    ica = IndependentComponents(n_components=kwargs['ica_n_components'])
+    ica.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perform_model_complexity=False)
 
     print('\n--------------------------')
     print('RP')
     rp = RandomProjections(n_components=kwargs['rp_n_components'])
-    rp.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perfrom_model_complexity=True)
+    rp.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perform_model_complexity=False)
+
+    print('\n--------------------------')
+    print('NMF')
+    nmf = NonNegativeMatrix(n_components=kwargs['nmf_n_components'])
+    nmf.experiment(x_train, x_test, y_train, dataset=kwargs['dataset'], perform_model_complexity=True)
 
 
 if __name__ == "__main__":
@@ -179,24 +189,28 @@ if __name__ == "__main__":
     print('\n--------------------------')
     dataset = 'WDBC'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
-    clustering(x_train, x_test, y_train, y_test,
-               dataset=dataset,
-               kmeans_n_clusters=2,
-               em_n_clusters=2, em_covariance='full')
+    # clustering(x_train, x_test, y_train, y_test,
+    #            dataset=dataset,
+    #            kmeans_n_clusters=2,
+    #            em_n_clusters=2, em_covariance='full')
     dimensionality_reduction(x_train, x_test, y_train,
                              dataset=dataset,
-                             pca_n_components=15,
-                             rp_n_components=20)
+                             pca_n_components=10,
+                             ica_n_components=12,
+                             rp_n_components=20,
+                             nmf_n_components=15)
 
     # Run experiment 2 on MNIST
     print('\n--------------------------')
     dataset = 'MNIST'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
-    clustering(x_train, x_test, y_train, y_test,
-               dataset=dataset,
-               kmeans_n_clusters=2,
-               em_n_clusters=10, em_covariance='diag')
+    # clustering(x_train, x_test, y_train, y_test,
+    #            dataset=dataset,
+    #            kmeans_n_clusters=2,
+    #            em_n_clusters=10, em_covariance='diag')
     dimensionality_reduction(x_train, x_test, y_train,
                              dataset=dataset,
-                             pca_n_components=2,
-                             rp_n_components=2)
+                             pca_n_components=250,
+                             ica_n_components=320,
+                             rp_n_components=500,
+                             nmf_n_components=400)
