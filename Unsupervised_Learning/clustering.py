@@ -39,13 +39,15 @@ class Clustering(ABC):
                                                                       adjusted_mutual_info_score(y, labels, average_method='arithmetic'),
                                                                       silhouette_score(x, labels, metric='euclidean')))
 
-    def experiment(self, x_train, y_train, dataset, perform_model_complexity):
+    def experiment(self, x_train, x_test, y_train, dataset, perform_model_complexity):
 
         if perform_model_complexity:
             self.plot_model_complexity(x_train, dataset)
 
         self.train(x_train, y_train)
         self.visualize_clusters(x_train, y_train, dataset)
+
+        return self.clusters, self.predict(x_test)
 
     @abstractmethod
     def plot_model_complexity(self, x, dataset):
@@ -55,7 +57,7 @@ class Clustering(ABC):
         self.n_clusters = n_clusters
         self.model.set_params(**{'n_clusters': n_clusters})
 
-    def predict(self, x, y):
+    def predict(self, x):
         return self.model.predict(x)
 
     def train(self, x, y):

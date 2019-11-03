@@ -266,6 +266,7 @@ class RandomProjections(DimensionalityReduction):
         utils.save_figure('{}_rp_model_complexity'.format(dataset))
 
     def reconstruct(self, x, x_reduced):
-        x_reconstructed = (self.model.components_.T @ x_reduced.T).T
+        P_inv = np.linalg.pinv(self.model.components_)  # k x m -> m x k
+        x_reconstructed = (P_inv @ x_reduced.T).T  # m x k x k x n = m x n -> n x m
         mse = np.mean((x - x_reconstructed) ** 2)
         return mse
