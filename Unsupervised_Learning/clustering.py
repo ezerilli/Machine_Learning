@@ -80,7 +80,7 @@ class Clustering(ABC):
         model_params = self.model.get_params()
         model_params[self.name_param] = n_classes
         model.set_params(**model_params)
-        print('\nBenchmark Model with k={}'.format(n_classes))
+        print('\nBenchmark Model with k = n classes = {}'.format(n_classes))
         clusters = model.fit_predict(x)
         self.benchmark(x, y, clusters)
 
@@ -88,10 +88,9 @@ class Clustering(ABC):
         df['pca1'] = x_pca[:, 0]
         df['pca2'] = x_pca[:, 1]
         df['y'] = y
-        df['true c'] = clusters
         df['c'] = self.clusters
 
-        fig, (ax1, ax2) = plt.subplots(2, 3, figsize=(15, 8))
+        fig, (ax1, ax2) = plt.subplots(2, 2, figsize=(15, 8))
 
         utils.plot_clusters(ax1, 'pca1', 'pca2', df, y, self.name)
         utils.plot_clusters(ax2, 'tsne1', 'tsne2', df, y, self.name)
@@ -110,23 +109,26 @@ class KMeansClustering(Clustering):
         
         print('\nPlot Model Complexity')
 
-        silhouette = []
-        k_range = np.arange(2, self.max_n_clusters + 1)
+        inertia, inertia_diff = [], []
+        k_range = np.arange(1, self.max_n_clusters + 2)
 
         for k in k_range:
             model = KMeans(n_clusters=k, init='k-means++', max_iter=1000, random_state=self.random_seed, n_jobs=-1)
-            clusters = model.fit_predict(x)
+            model.fit(x)
+            inertia.append(model.inertia_)
 
-            silhouette_avg = silhouette_score(x, clusters, metric='euclidean')
-            silhouette.append(silhouette_avg)
+            if k > 1:
+                inertia_diff.append(abs(inertia[-1] - inertia[-2]))
 
-            print('k = {} --> average silhouette = {:.3f}'.format(k, silhouette_avg))
+            print('k = {} -->  inertia = {:.3f}'.format(k, inertia[-1]))
 
         fig, ax = plt.subplots(2, math.ceil(self.max_n_clusters / 2), figsize=(24, 12))
         ax = ax.flatten()
-        ax[0].plot(k_range, silhouette, '-o', markersize=2, label='Silhouette')
-        utils.set_axis_title_labels(ax[0], title='K-MEANS - Choosing k with the Silhouette method',
-                                    x_label='Number of clusters k', y_label='Average Silhouette')
+        ax[0].plot(k_range, inertia, '-o', markersize=2, label='Inertia')
+        ax[0].plot(k_range[1:], inertia_diff, '-o', markersize=2, label=r'Inertia |$\Delta$|')
+        ax[0].legend(loc='best')
+        utils.set_axis_title_labels(ax[0], title='K-MEANS - Choosing k with the Elbow method',
+                                    x_label='Number of clusters k', y_label='Inertia')
 
         self.visualize_silhouette(x, ax)
 

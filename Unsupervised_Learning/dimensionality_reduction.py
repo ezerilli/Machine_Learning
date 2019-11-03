@@ -75,6 +75,7 @@ class IndependentComponents(DimensionalityReduction):
         super(IndependentComponents, self).__init__(name='ica', n_components=n_components, random_seed=random_seed)
         self.model = FastICA(n_components=n_components, tol=0.01, max_iter=1000, random_state=random_seed)
 
+
     def plot_model_complexity(self, x, dataset):
 
         print('\nPlot Model Complexity')

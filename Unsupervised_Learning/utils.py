@@ -9,32 +9,25 @@ IMAGE_DIR = 'images/'
 
 def plot_clusters(ax, component1, component2, df, y, name):
 
-    n_classes = len(np.unique(y))
-    n_clusters = len(np.unique(df['c']))
-
-    y_colors = sns.color_palette('hls', n_classes)
-    c_colors = sns.color_palette('hls', n_clusters)
+    y_colors = sns.color_palette('hls', len(np.unique(y)))
+    c_colors = sns.color_palette('hls', len(np.unique(df['c'])))
 
     sns.scatterplot(x=component1, y=component2, hue='y', palette=y_colors, data=df, legend='full', alpha=0.3, ax=ax[0])
-    sns.scatterplot(x=component1, y=component2, hue='true c', palette=y_colors, data=df, legend='full', alpha=0.3, ax=ax[1])
-    sns.scatterplot(x=component1, y=component2, hue='c', palette=c_colors, data=df, legend='full', alpha=0.3, ax=ax[2])
+    sns.scatterplot(x=component1, y=component2, hue='c', palette=c_colors, data=df, legend='full', alpha=0.3, ax=ax[1])
 
     name = name.upper()
     transform = component1[:-1].upper()
 
     ax[0].set_title('True Clusters represented with {}'.format(transform))
-    ax[1].set_title('{} Clusters represented with {} and k = {}'.format(name, transform, n_classes))
-    ax[2].set_title('{} Clusters represented with {} and k = {}'.format(name, transform, n_clusters))
+    ax[1].set_title('{} Clusters represented with {}'.format(name, transform))
 
     xlim = 1.1 * np.max(np.abs(df[component1]))
     ax[0].set_xlim(-xlim, xlim)
     ax[1].set_xlim(-xlim, xlim)
-    ax[2].set_xlim(-xlim, xlim)
 
     ylim = 1.1 * np.max(np.abs(df[component2]))
     ax[0].set_ylim(-ylim, ylim)
     ax[1].set_ylim(-ylim, ylim)
-    ax[2].set_ylim(-ylim, ylim)
 
 
 def plot_components(component1, component2, df, y, name):
