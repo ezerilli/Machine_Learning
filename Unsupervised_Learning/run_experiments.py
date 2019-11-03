@@ -18,7 +18,7 @@ from sklearn.preprocessing import StandardScaler
 IMAGE_DIR = 'images/'
 
 
-def load_dataset(dataset='WDBC', split_percentage=0.2, visualize=False):
+def load_dataset(dataset='WDBC', split_percentage=0.2):
     """Load MNIST or WDBC.
 
        Args:
@@ -42,46 +42,6 @@ def load_dataset(dataset='WDBC', split_percentage=0.2, visualize=False):
         data = load_breast_cancer()
         x, y, labels, features = data.data, data.target, data.target_names, data.feature_names
 
-        # If some of the dataset images have to been shown
-        if visualize:
-
-            # Build dataset and assign labels
-            df = pd.DataFrame(x, columns=features)
-            df['labels'] = y
-            df['labels'] = df['labels'].map({1: 'B', 0: 'M'})
-
-            # Plot instances distribution
-            plt.figure()
-            sns.set(style='darkgrid')
-            sns.countplot(x='labels', data=df, palette={'B': 'b', 'M': 'r'})
-            plt.title('{} Instances Distribution'.format(dataset))
-            utils.save_figure('{}_Instances_Distribution'.format(dataset))
-
-            # Plot heatmap of correlations
-            plt.figure(figsize=(15, 15))
-            sns.heatmap(df.corr(), annot=True, square=True, cmap='coolwarm')
-            utils.save_figure('{}_Features_Correlation'.format(dataset))
-
-            # Plot scatter matrix of features
-            plt.figure(figsize=(15, 15))
-            sns.pairplot(df, hue='labels', palette={'B': 'b', 'M': 'r'})
-            utils.save_figure('{}_Scatter_Matrix_of_Features'.format(dataset))
-
-            # Plot features distributions
-            bins = 12
-            plt.figure(figsize=(15, 15))
-            for i, feature in enumerate(features):
-                plt.subplot(5, 2, i + 1)
-
-                sns.distplot(x[y == 0, i], bins=bins, color='red', label='M')
-                sns.distplot(x[y == 1, i], bins=bins, color='blue', label='B')
-
-                plt.legend(loc='lower left')
-                plt.xlabel(feature)
-
-            utils.save_figure('{}_Features_Discrimination'.format(dataset))
-            plt.close(fig='all')
-
     elif dataset == datasets[1]:
 
         # Load original MNIST
@@ -92,17 +52,6 @@ def load_dataset(dataset='WDBC', split_percentage=0.2, visualize=False):
         x, _, y, _ = train_test_split(x, y, test_size=0.98, shuffle=True, random_state=42, stratify=y)
         labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']  # labels
         y = y.astype(int)
-
-        if visualize:
-            # Show images with labels
-            for i in range(2 * 3):
-                plt.subplot(2, 3, i + 1)
-                plt.imshow(x[i].reshape((28, 28)), cmap=plt.cm.gray)
-                plt.title('{}'.format(y[i]), size=12)
-                plt.xticks(())
-                plt.yticks(())
-
-            plt.show()
 
     else:
         # Else dataset not available
@@ -141,36 +90,21 @@ def clustering(x_train, x_test, y_train, **kwargs):
     print('\n--------------------------')
     print('kMeans')
     kmeans = KMeansClustering(n_clusters=kwargs['kmeans_n_clusters'], max_n_clusters=10)
-    train_clusters, test_clusters = kmeans.experiment(x_train, x_test, y_train,
-                                                      dataset=kwargs['dataset'],
-                                                      perform_model_complexity=kwargs['perform_model_complexity'])
-
-    train_clusters = np.expand_dims(train_clusters, axis=1)
-    test_clusters = np.expand_dims(test_clusters, axis=1)
-
-    x_train_new = np.append(x_train, train_clusters, axis=1)
-    x_test_new = np.append(x_test, test_clusters, axis=1)
-
-    nn = NeuralNetwork()
-    nn.experiment(x_train_new, x_test_new, y_train, y_test)
+    kmeans_clusters = kmeans.experiment(x_train, x_test, y_train,
+                                        dataset=kwargs['dataset'],
+                                        perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
     print('EM')
     gmm = MixtureOfGaussians(n_clusters=kwargs['em_n_clusters'], covariance=kwargs['em_covariance'], max_n_clusters=10)
-    train_clusters, test_clusters = gmm.experiment(x_train, x_test, y_train,
-                                                   dataset=kwargs['dataset'],
-                                                   perform_model_complexity=kwargs['perform_model_complexity'])
-    train_clusters = np.expand_dims(train_clusters, axis=1)
-    test_clusters = np.expand_dims(test_clusters, axis=1)
+    gmm_clusters = gmm.experiment(x_train, x_test, y_train,
+                                  dataset=kwargs['dataset'],
+                                  perform_model_complexity=kwargs['perform_model_complexity'])
 
-    x_train_new = np.append(x_train, train_clusters, axis=1)
-    x_test_new = np.append(x_test, test_clusters, axis=1)
-
-    nn = NeuralNetwork()
-    nn.experiment(x_train_new, x_test_new, y_train, y_test)
+    return kmeans_clusters, gmm_clusters
 
 
-def dimensionality_reduction(x_train, x_test, y_train, y_test, **kwargs):
+def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
     """Perform experiment.
 
         Args:
@@ -185,66 +119,113 @@ def dimensionality_reduction(x_train, x_test, y_train, y_test, **kwargs):
     print('\n--------------------------')
     print('PCA')
     pca = PrincipalComponents(n_components=kwargs['pca_n_components'])
-    x_train_pca, x_test_pca = pca.experiment(x_train, x_test, y_train,
-                                             dataset=kwargs['dataset'],
-                                             perform_model_complexity=kwargs['perform_model_complexity'])
+    x_pca = pca.experiment(x_train, x_test, y_train,
+                           dataset=kwargs['dataset'],
+                           perform_model_complexity=kwargs['perform_model_complexity'])
 
-    # clustering(x_train_pca, y_train,
-    #            dataset=dataset + '_pca_reduced',
-    #            kmeans_n_clusters=kwargs['pca_kmeans_n_clusters'],
-    #            em_n_clusters=kwargs['pca_em_n_clusters'], em_covariance=kwargs['pca_em_covariance'],
-    #            perform_model_complexity=kwargs['perform_model_complexity'])
-
-    nn = NeuralNetwork()
-    nn.experiment(x_train_pca, x_test_pca, y_train, y_test)
+    clustering(x_pca[0],  x_pca[1], y_train,
+               dataset=kwargs['dataset'] + '_pca_reduced',
+               kmeans_n_clusters=kwargs['pca_kmeans_n_clusters'],
+               em_n_clusters=kwargs['pca_em_n_clusters'], em_covariance=kwargs['pca_em_covariance'],
+               perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
     print('ICA')
     ica = IndependentComponents(n_components=kwargs['ica_n_components'])
-    x_train_ica, x_test_ica = ica.experiment(x_train, x_test, y_train,
-                                             dataset=kwargs['dataset'],
-                                             perform_model_complexity=kwargs['perform_model_complexity'])
+    x_ica = ica.experiment(x_train, x_test, y_train,
+                           dataset=kwargs['dataset'],
+                           perform_model_complexity=kwargs['perform_model_complexity'])
 
-    # clustering(x_train_ica, y_train,
-    #            dataset=dataset + '_ica_reduced',
-    #            kmeans_n_clusters=kwargs['ica_kmeans_n_clusters'],
-    #            em_n_clusters=kwargs['ica_em_n_clusters'], em_covariance=kwargs['ica_em_covariance'],
-    #            perform_model_complexity=kwargs['perform_model_complexity'])
-
-    nn = NeuralNetwork()
-    nn.experiment(x_train_ica, x_test_ica, y_train, y_test)
+    clustering(x_ica[0],  x_ica[1], y_train,
+               dataset=kwargs['dataset'] + '_ica_reduced',
+               kmeans_n_clusters=kwargs['ica_kmeans_n_clusters'],
+               em_n_clusters=kwargs['ica_em_n_clusters'], em_covariance=kwargs['ica_em_covariance'],
+               perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
     print('KPCA')
     kpca = KernelPrincipalComponents(n_components=kwargs['kpca_n_components'], kernel=kwargs['kpca_kernel'])
-    x_train_kpca, x_test_kpca = kpca.experiment(x_train, x_test, y_train,
-                                                dataset=kwargs['dataset'],
-                                                perform_model_complexity=kwargs['perform_model_complexity'])
+    x_kpca = kpca.experiment(x_train, x_test, y_train,
+                             dataset=kwargs['dataset'],
+                             perform_model_complexity=kwargs['perform_model_complexity'])
 
-    # clustering(x_train_kpca, y_train,
-    #            dataset=dataset + '_kpca_reduced',
-    #            kmeans_n_clusters=kwargs['kpca_kmeans_n_clusters'],
-    #            em_n_clusters=kwargs['kpca_em_n_clusters'], em_covariance=kwargs['kpca_em_covariance'],
-    #            perform_model_complexity=kwargs['perform_model_complexity'])
-
-    nn = NeuralNetwork()
-    nn.experiment(x_train_kpca, x_test_kpca, y_train, y_test)
+    clustering(x_kpca[0], x_kpca[1], y_train,
+               dataset=kwargs['dataset'] + '_kpca_reduced',
+               kmeans_n_clusters=kwargs['kpca_kmeans_n_clusters'],
+               em_n_clusters=kwargs['kpca_em_n_clusters'], em_covariance=kwargs['kpca_em_covariance'],
+               perform_model_complexity=kwargs['perform_model_complexity'])
 
     print('\n--------------------------')
     print('RP')
     rp = RandomProjections(n_components=kwargs['rp_n_components'])
-    x_train_rp, x_test_rp = rp.experiment(x_train, x_test, y_train,
-                                          dataset=kwargs['dataset'],
-                                          perform_model_complexity=kwargs['perform_model_complexity'])
+    x_rp = rp.experiment(x_train, x_test, y_train,
+                         dataset=kwargs['dataset'],
+                         perform_model_complexity=kwargs['perform_model_complexity'])
 
-    # clustering(x_train_rp, y_train,
-    #            dataset=dataset + '_rp_reduced',
-    #            kmeans_n_clusters=kwargs['rp_kmeans_n_clusters'],
-    #            em_n_clusters=kwargs['rp_em_n_clusters'], em_covariance=kwargs['rp_em_covariance'],
-    #            perform_model_complexity=kwargs['perform_model_complexity'])
+    clustering(x_rp[0], x_rp[1], y_train,
+               dataset=kwargs['dataset'] + '_rp_reduced',
+               kmeans_n_clusters=kwargs['rp_kmeans_n_clusters'],
+               em_n_clusters=kwargs['rp_em_n_clusters'], em_covariance=kwargs['rp_em_covariance'],
+               perform_model_complexity=kwargs['perform_model_complexity'])
 
-    nn = NeuralNetwork()
-    nn.experiment(x_train_rp, x_test_rp, y_train, y_test)
+    return x_pca, x_ica, x_kpca, x_rp
+
+
+def neural_network(x_pca, x_ica, x_kpca, x_rp, kmeans_clusters, gmm_clusters, y_train, y_test, **kwargs):
+
+    print('\n--------------------------')
+    print('PCA + NN')
+    nn = NeuralNetwork(layer1_nodes=kwargs['layer1_nodes'],
+                       layer2_nodes=kwargs['layer2_nodes'],
+                       learning_rate=kwargs['learning_rate'])
+    nn.experiment(x_pca[0], x_pca[1], y_train, y_test)
+
+    print('\n--------------------------')
+    print('ICA + NN')
+    nn = NeuralNetwork(layer1_nodes=kwargs['layer1_nodes'],
+                       layer2_nodes=kwargs['layer2_nodes'],
+                       learning_rate=kwargs['learning_rate'])
+    nn.experiment(x_ica[0], x_ica[1], y_train, y_test)
+
+    print('\n--------------------------')
+    print('KPCA + NN')
+    nn = NeuralNetwork(layer1_nodes=kwargs['layer1_nodes'],
+                       layer2_nodes=kwargs['layer2_nodes'],
+                       learning_rate=kwargs['learning_rate'])
+    nn.experiment(x_kpca[0], x_kpca[1], y_train, y_test)
+
+    print('\n--------------------------')
+    print('RP+ NN')
+    nn = NeuralNetwork(layer1_nodes=kwargs['layer1_nodes'],
+                       layer2_nodes=kwargs['layer2_nodes'],
+                       learning_rate=kwargs['learning_rate'])
+    nn.experiment(x_rp[0], x_rp[1], y_train, y_test)
+
+    print('\n--------------------------')
+    print('KMEANS+ NN')
+    nn = NeuralNetwork(layer1_nodes=kwargs['layer1_nodes'],
+                       layer2_nodes=kwargs['layer2_nodes'],
+                       learning_rate=kwargs['learning_rate'])
+
+    train_clusters = np.expand_dims(kmeans_clusters[0], axis=1)
+    test_clusters = np.expand_dims(kmeans_clusters[1], axis=1)
+    x_train_new = np.append(x_train, train_clusters, axis=1)
+    x_test_new = np.append(x_test, test_clusters, axis=1)
+
+    nn.experiment(x_train_new, x_test_new, y_train, y_test)
+
+    print('\n--------------------------')
+    print('GMM+ NN')
+    nn = NeuralNetwork(layer1_nodes=kwargs['layer1_nodes'],
+                       layer2_nodes=kwargs['layer2_nodes'],
+                       learning_rate=kwargs['learning_rate'])
+
+    train_clusters = np.expand_dims(gmm_clusters[0], axis=1)
+    test_clusters = np.expand_dims(gmm_clusters[1], axis=1)
+    x_train_new = np.append(x_train, train_clusters, axis=1)
+    x_test_new = np.append(x_test, test_clusters, axis=1)
+
+    nn.experiment(x_train_new, x_test_new, y_train, y_test)
 
 
 if __name__ == "__main__":
@@ -254,43 +235,55 @@ if __name__ == "__main__":
     dataset = 'WDBC'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
 
-    clustering(x_train, x_test, y_train,
-               dataset=dataset,
-               kmeans_n_clusters=2,
-               em_n_clusters=2, em_covariance='full',
-               perform_model_complexity=False)
+    # kmeans_clusters, gmm_clusters = clustering(x_train, x_test, y_train,
+    #                                            dataset=dataset,
+    #                                            kmeans_n_clusters=2,
+    #                                            em_n_clusters=2, em_covariance='full',
+    #                                            perform_model_complexity=False)
 
-    # dimensionality_reduction(x_train, x_test, y_train, y_test,
-    #                          dataset=dataset,
-    #                          pca_n_components=10, pca_kmeans_n_clusters=2,
-    #                          pca_em_n_clusters=4, pca_em_covariance='diag',
-    #                          ica_n_components=12, ica_kmeans_n_clusters=2,
-    #                          ica_em_n_clusters=5, ica_em_covariance='diag',
-    #                          kpca_n_components=10, kpca_kernel='cosine', kpca_kmeans_n_clusters=2,
-    #                          kpca_em_n_clusters=4, kpca_em_covariance='diag',
-    #                          rp_n_components=20, rp_kmeans_n_clusters=2,
-    #                          rp_em_n_clusters=3, rp_em_covariance='full',
-    #                          perform_model_complexity=False)
+    x_pca, x_ica, x_kpca, x_rp = dimensionality_reduction(x_train, x_test, y_train,
+                                                          dataset=dataset,
+                                                          pca_n_components=10, pca_kmeans_n_clusters=2,
+                                                          pca_em_n_clusters=4, pca_em_covariance='diag',
+                                                          ica_n_components=12, ica_kmeans_n_clusters=2,
+                                                          ica_em_n_clusters=5, ica_em_covariance='diag',
+                                                          kpca_n_components=10, kpca_kernel='cosine',
+                                                          kpca_kmeans_n_clusters=2,
+                                                          kpca_em_n_clusters=4, kpca_em_covariance='diag',
+                                                          rp_n_components=20, rp_kmeans_n_clusters=2,
+                                                          rp_em_n_clusters=3, rp_em_covariance='full',
+                                                          perform_model_complexity=True)
+
+    # neural_network(x_pca, x_ica, x_kpca, x_rp,
+    #                kmeans_clusters, gmm_clusters,
+    #                y_train, y_test,
+    #                layer1_nodes=50, layer2_nodes=30, learning_rate=0.001)
 
     # Run experiment 2 on MNIST
     print('\n--------------------------')
     dataset = 'MNIST'
     x_train, x_test, y_train, y_test = load_dataset(dataset)
 
-    clustering(x_train, x_test, y_train,
-               dataset=dataset,
-               kmeans_n_clusters=2,
-               em_n_clusters=10, em_covariance='diag',
-               perform_model_complexity=False)
+    # kmeans_clusters, gmm_clusters = clustering(x_train, x_test, y_train,
+    #                                            dataset=dataset,
+    #                                            kmeans_n_clusters=2,
+    #                                            em_n_clusters=10, em_covariance='diag',
+    #                                            perform_model_complexity=False)
 
-    # dimensionality_reduction(x_train, x_test, y_train, y_test,
-    #                          dataset=dataset,
-    #                          pca_n_components=260, pca_kmeans_n_clusters=2,
-    #                          pca_em_n_clusters=6, pca_em_covariance='full',
-    #                          ica_n_components=320, ica_kmeans_n_clusters=2,
-    #                          ica_em_n_clusters=10, ica_em_covariance='diag',
-    #                          kpca_n_components=260, kpca_kernel='poly', kpca_kmeans_n_clusters=2,
-    #                          kpca_em_n_clusters=3, kpca_em_covariance='full',
-    #                          rp_n_components=400, rp_kmeans_n_clusters=2,
-    #                          rp_em_n_clusters=2, rp_em_covariance='full',
-    #                          perform_model_complexity=False)
+    x_pca, x_ica, x_kpca, x_rp = dimensionality_reduction(x_train, x_test, y_train,
+                                                          dataset=dataset,
+                                                          pca_n_components=260, pca_kmeans_n_clusters=2,
+                                                          pca_em_n_clusters=6, pca_em_covariance='full',
+                                                          ica_n_components=320, ica_kmeans_n_clusters=2,
+                                                          ica_em_n_clusters=10, ica_em_covariance='diag',
+                                                          kpca_n_components=260, kpca_kernel='poly',
+                                                          kpca_kmeans_n_clusters=2,
+                                                          kpca_em_n_clusters=3, kpca_em_covariance='full',
+                                                          rp_n_components=400, rp_kmeans_n_clusters=2,
+                                                          rp_em_n_clusters=2, rp_em_covariance='full',
+                                                          perform_model_complexity=True)
+
+    # neural_network(x_pca, x_ica, x_kpca, x_rp,
+    #                kmeans_clusters, gmm_clusters,
+    #                y_train, y_test,
+    #                layer1_nodes=150, layer2_nodes=100, learning_rate=0.06)

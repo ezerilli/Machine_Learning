@@ -249,13 +249,14 @@ class RandomProjections(DimensionalityReduction):
 
                 rp = SparseRandomProjection(n_components=k, random_state=seed)
                 x_reduced = rp.fit_transform(x)
-                x_reconstructed = (rp.components_.T @ x_reduced.T).T
+                P_inv = np.linalg.pinv(rp.components_.toarray())  # k x m -> m x k
+                x_reconstructed = (P_inv @ x_reduced.T).T  # m x k x k x n = m x n -> n x m
                 mse.append(np.mean((x - x_reconstructed) ** 2))
 
             mse_random_runs.append(mse)
 
         np.set_printoptions(precision=2)
-        print('k = [1, ..., {}] --> \nReconstruction errors = {}'.format(k_range[-1], np.mean(mse_random_runs, axis=0)))
+        print('k = [2, ..., {}] --> \nReconstruction errors = {}'.format(k_range[-1], np.mean(mse_random_runs, axis=0)))
 
         plt.figure()
         utils.plot_multiple_random_runs(k_range, mse_random_runs, 'MSE')
@@ -266,7 +267,7 @@ class RandomProjections(DimensionalityReduction):
         utils.save_figure('{}_rp_model_complexity'.format(dataset))
 
     def reconstruct(self, x, x_reduced):
-        P_inv = np.linalg.pinv(self.model.components_)  # k x m -> m x k
+        P_inv = np.linalg.pinv(self.model.components_.toarray())  # k x m -> m x k
         x_reconstructed = (P_inv @ x_reduced.T).T  # m x k x k x n = m x n -> n x m
         mse = np.mean((x - x_reconstructed) ** 2)
         return mse

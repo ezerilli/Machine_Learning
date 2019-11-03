@@ -8,7 +8,7 @@ from sklearn.neural_network import MLPClassifier
 
 class NeuralNetwork:
 
-    def __init__(self, layer1_nodes=50, layer2_nodes=30):
+    def __init__(self, layer1_nodes, layer2_nodes, learning_rate):
         """Initialize a base classifier.
 
             Args:
@@ -18,7 +18,7 @@ class NeuralNetwork:
             """
         self.model = MLPClassifier(hidden_layer_sizes=(layer1_nodes, layer2_nodes), activation='relu',
                                    solver='sgd', alpha=0.01, batch_size=200, learning_rate='constant',
-                                   learning_rate_init=0.001, max_iter=100, tol=1e-4,
+                                   learning_rate_init=learning_rate, max_iter=100, tol=1e-4,
                                    early_stopping=False, validation_fraction=0.1, momentum=0.5,
                                    n_iter_no_change=100, random_state=42)
 
