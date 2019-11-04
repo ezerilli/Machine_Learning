@@ -88,8 +88,28 @@ report (not provided here due to Georgia Tech's Honor Code).
 
 ### ASSIGNMENT3 - UNSUPERVISED LEARNING 🔥🔥🔥
 
-Work in progress !
+This assignment aims to explore some algorithms in **Unsupervised Learning**, namely **Principal Components Analysis (PCA)**, 
+**Kernel PCA (KPCA)**, **Independent Components Analysis (ICA)**, **Random Projections (RP)**, **k-Means** and 
+**Gaussian Mixture Models (GMM)**, while comparing their performances on 2 interesting dataset: the 
+**Wisconsin Diagnostic Breast Cancer (WDBC)** and the **Handwritten Digits Image Classification (the famous MNIST)**. 
+Moreover, their contribution to **Neural Networks** in the supervised setting will be assessed.
 
+The assignment consists of two parts: 
+
+- _experiment 1_, producing curves for dimensionality reduction, clustering and neural networks with unsupervised techniques
+ on the _Wisconsin Diagnostic Breast Cancer (WDBC)_ dataset.
+
+- _experiment 2_, producing curves for dimensionality reduction, clustering and neural networks with unsupervised techniques
+on the _Handwritten Digits Image Classification (MNIST)_ dataset.
+
+In order to run the experiments, run:
+```bash
+cd Unsupervised_Learning
+python run_experiments.py
+```
+Figures will show up progressively. It takes a while to perform all the experiments and parameters optimizations. 
+However, they have already been saved into the images directory. Theory, results and experiments are discussed in the 
+report (not provided here due to Georgia Tech's Honor Code). 
 
 ### ASSIGNMENT4 - MARKOV DECISION PROCESSES 🔥🔥🔥
 
@@ -105,3 +125,4 @@ Work in progress !
 - [6] Thomas M. Mitchell. _Machine Learning_. McGraw-Hill, New York, NY, USA, 1997.
 - [7] Jeremy S. De Bonet, Charles L. Isbell, Jr., and Paul Viola. _MIMIC: Finding optima by esti- mating probability densities_. In Proceedings of the 9th International Conference on Neural Information Processing Systems, pages 424–430, Cambridge, MA, USA, 1996. MIT Press.
 - [8] G Hayes. _mlrose: Machine Learning, Randomized Optimization and SEarch package for python_. https://github.com/gkhayes/mlrose, 2019. Accessed: 10/09/2019.
+- [9] I K Fodor. _A survey of dimension reduction techniques_. Technical report, Lawrence Livermore National Lab., CA (US), 2002.
