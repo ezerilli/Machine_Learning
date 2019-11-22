@@ -9,10 +9,13 @@ from sklearn.neural_network import MLPClassifier
 class NeuralNetwork:
 
     def __init__(self, layer1_nodes, layer2_nodes, learning_rate):
-        """Initialize a base classifier.
+        """Initialize a Neural Network classifier.
 
             Args:
-                name (string): name of the classifier.
+                layer1_nodes (int): number of neurons in the first layer.
+                layer2_nodes (int): number of neurons in the second layer.
+                learning_rate (float): learning rate.
+
             Returns:
                 None.
             """
@@ -26,13 +29,13 @@ class NeuralNetwork:
         """Evaluate the model by reporting the classification report and the confusion matrix.
 
             Args:
-                x_test (ndarray): test set data.
-                y_test (ndarray): test set labels.
+                x_test (ndarray): test data.
+                y_test (ndarray): test labels.
 
             Returns:
                 None.
             """
-        predictions = self.predict(x_test)  # predict test labels
+        predictions = self.predict(x_test)  # predict on test data
 
         print('\nEvaluate on the Test Set')
         print(classification_report(y_test, predictions))  # produce classification report
@@ -43,8 +46,8 @@ class NeuralNetwork:
         """Fit the model by on the training data.
 
             Args:
-                x_train (ndarray): train set data.
-                y_train (ndarray): train set labels.
+                x_train (ndarray): training data.
+                y_train (ndarray): training labels.
 
             Returns:
                 None.
@@ -57,7 +60,7 @@ class NeuralNetwork:
         print('\nFitting Training Set: {:.4f} seconds'.format(end_time-start_time))
 
     def predict(self, x):
-        """Predict on some test data.
+        """Predict on some data.
 
             Args:
                 x (ndarray): data to predict.
@@ -77,8 +80,7 @@ class NeuralNetwork:
     def experiment(self, x_train, x_test, y_train, y_test):
         """Run an experiment on the model.
 
-            Run model complexity to find optimal parameters, plot learning curves,
-            fit on training data and evaluate the model on the test set.
+            Fit on training data and evaluate the model on the test set.
 
             Args:
                x_train (ndarray): training data.

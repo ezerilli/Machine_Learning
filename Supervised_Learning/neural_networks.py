@@ -17,7 +17,7 @@ IMAGE_DIR = 'images/'
 class NeuralNetwork(BaseClassifier):
 
     def __init__(self, alpha=0.0001, layer1_nodes=50, layer2_nodes=30, learning_rate=0.001, max_iter=200):
-        """Initialize a Decision Tree.
+        """Initialize a Neural Network.
 
             Args:
                 alpha (float): regularization term.

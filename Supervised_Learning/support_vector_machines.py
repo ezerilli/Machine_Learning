@@ -14,7 +14,7 @@ IMAGE_DIR = 'images/'
 class SVM(BaseClassifier):
 
     def __init__(self, c=1., kernel='rbf', degree=3, gamma=0.001, random_state=42):
-        """Initialize a Decision Tree.
+        """Initialize Support Vector Machines (SVM).
 
             Args:
                 c (float): regularization term.

@@ -14,7 +14,7 @@ IMAGE_DIR = 'images/'
 class KNN(BaseClassifier):
 
     def __init__(self, k=1, weights='uniform', p=2):
-        """Initialize a Decision Tree.
+        """Initialize k-Nearest Neighbors.
 
             Args:
                 k (int): number of neighbors.

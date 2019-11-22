@@ -216,28 +216,27 @@ def dimensionality_reduction(x_train, x_test, y_train, **kwargs):
 def neural_network(x_train, x_test, y_train, y_test,
                    x_pca, x_ica, x_kpca, x_rp,
                    x_kmeans, x_gmm, **kwargs):
-
     """Perform neural network experiment.
 
-            Args:
-               x_train (ndarray): training data.
-               x_test (ndarray): test data.
-               y_train (ndarray): training labels.
-               y_test (ndarray): test labels.
-               x_pca (ndarray): reduced dataset by PCA.
-               x_ica (ndarray): reduced dataset by ICA.
-               x_kpca (ndarray): reduced dataset by KPCA.
-               x_rp (ndarray): reduced dataset by RP.
-               x_kmeans (ndarray): clusters produced by k-Means.
-               x_gmm (ndarray): clusters produced by Gaussian Mixture Models.
-               kwargs (dict): additional arguments to pass:
-                        - layer1_nodes (int): number of neurons in first layer.
-                        - layer2_nodes (int): number of neurons in second layer.
-                        - learning_rate (float): learning rate.
+        Args:
+           x_train (ndarray): training data.
+           x_test (ndarray): test data.
+           y_train (ndarray): training labels.
+           y_test (ndarray): test labels.
+           x_pca (ndarray): reduced dataset by PCA.
+           x_ica (ndarray): reduced dataset by ICA.
+           x_kpca (ndarray): reduced dataset by KPCA.
+           x_rp (ndarray): reduced dataset by RP.
+           x_kmeans (ndarray): clusters produced by k-Means.
+           x_gmm (ndarray): clusters produced by Gaussian Mixture Models.
+           kwargs (dict): additional arguments to pass:
+                    - layer1_nodes (int): number of neurons in first layer.
+                    - layer2_nodes (int): number of neurons in second layer.
+                    - learning_rate (float): learning rate.
 
-            Returns:
-               None.
-            """
+        Returns:
+           None.
+        """
 
     print('\n--------------------------')
     print('NN')

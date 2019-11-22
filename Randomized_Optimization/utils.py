@@ -13,8 +13,8 @@ def plot_helper(x_axis, y_axis, label):
 
         Args:
           x_axis (ndarray): x axis to plot over.
-          y_axis (ndarray): x axis to plot over.
-          label (ndarray): x axis to plot over.
+          y_axis (ndarray): y axis to plot.
+          label (ndarray): label.
 
 
         Returns:
@@ -27,12 +27,12 @@ def plot_helper(x_axis, y_axis, label):
 
 
 def set_plot_title_labels(title, x_label, y_label):
-    """Set plot title and axes labels.
+    """Set plot title and labels.
 
         Args:
-          title (string): x axis to plot over.
-          x_label (string): x axis to plot over.
-          y_label (string): x axis to plot over.
+          title (string): plot title.
+          x_label (string): x label.
+          y_label (string): y label.
 
         Returns:
           None.
