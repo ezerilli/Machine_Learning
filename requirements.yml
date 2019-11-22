@@ -16,4 +16,6 @@ dependencies:
     - graphviz==0.10.1
     - pydot==1.4.1
     - git+git://github.com/ezerilli/mlrose
+    - mujoco-py<2.1,>=2.0
+    - gym[all]
     
