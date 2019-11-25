@@ -113,8 +113,24 @@ report (not provided here due to Georgia Tech's Honor Code).
 
 ### ASSIGNMENT4 - MARKOV DECISION PROCESSES 🔥🔥🔥
 
-Work in progress !
+This assignment aims to explore some algorithms in **Reinforcement Learning**, namely **Value Iteration (VI)**, 
+**Policy Iteration (PI)** and **Q-Learning**, while comparing their performances on 2 interesting MDPs: the 
+**Frozen Lake** environment from OpenAI gym and the **Gambler's Problem** from Sutton and Barto. 
 
+The assignment consists of two parts: 
+
+- _experiment 1_, producing curves for VI, PI and Q-Learning on the _Frozen Lake_ environment from OpenAI gym.
+
+- _experiment 2_, producing curves for VI, PI and Q-Learning on the _Gambler's Problem_ from Sutton and Barto.
+
+In order to run the experiments, run:
+```bash
+cd Markov_Decision_Processes
+python run_experiments.py
+```
+Figures will show up progressively. It takes a while to perform all the experiments and parameters optimizations. 
+However, they have already been saved into the images directory. Theory, results and experiments are discussed in the 
+report (not provided here due to Georgia Tech's Honor Code). 
 ### REFERENCES
 
 - [1] National Cancer Institute. https://www.cancer.gov. Last accessed: 2019-09-20.

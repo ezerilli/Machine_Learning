@@ -329,7 +329,7 @@ def neural_network(x_train, x_test, y_train, y_test,
     nn.experiment(x_train_new, x_test_new, y_train, y_test)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
 
     # Run experiment 1 on WDBC
     print('\n--------------------------')
